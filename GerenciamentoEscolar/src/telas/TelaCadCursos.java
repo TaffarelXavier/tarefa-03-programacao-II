@@ -40,7 +40,7 @@ public class TelaCadCursos extends javax.swing.JDialog {
         try {
             Curso cursos[] = CursoController.listarTodosCursos();
 
-            Object[][] data = new Object[cursos.length][2]; //O 2, aqui, é a quantidade de colunas
+            Object[][] data = new Object[cursos.length][2]; //O 2, aqui, é a quantidade de colunas que contém na tabela curso
 
             int index = 0;
 
@@ -55,7 +55,7 @@ public class TelaCadCursos extends javax.swing.JDialog {
             //Limpa os campos abaixo com ID e NOME do curso
             jLabel4.setText("");
             jLabel2.setText("");
-
+            enableButtos(false);
         } catch (Exception ex) {
             Logger.getLogger(TelaCadCursos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -111,6 +111,9 @@ public class TelaCadCursos extends javax.swing.JDialog {
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jTable1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jTable1MouseExited(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -210,17 +213,14 @@ public class TelaCadCursos extends javax.swing.JDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -284,6 +284,15 @@ public class TelaCadCursos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Criei este método para habilitar e desabiltar os dois botões de opções: excluir e salvar alterações
+     * @param permitirEnabled 
+     */
+    void enableButtos(boolean permitirEnabled) {
+        jButton2.setEnabled(permitirEnabled);
+        jButton3.setEnabled(permitirEnabled);
+    }
+
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         //Pega o  index da Tabela ao clicar sobre ela:
         int rowIndex = jTable1.convertRowIndexToModel(jTable1.getSelectedRow());
@@ -296,20 +305,24 @@ public class TelaCadCursos extends javax.swing.JDialog {
 
         jLabel2.setText(String.valueOf(id));
         jLabel4.setText(nome);
-        jButton2.setEnabled(true);
-        jButton3.setEnabled(true);
-
+        enableButtos(true);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTable1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseEntered
         // TODO add your handling code here:
 
     }//GEN-LAST:event_jTable1MouseEntered
-
+    /**
+     *
+     * @param evt
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        //Pega o nome do curso:
         String cursoNome = jLabel4.getText();
+        //Pega o id do curso:
         int cursoCodigo = Integer.parseInt(jLabel2.getText());
+        //Mostra o dialogConfirm
         int dialogResult = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir este curso?\n"
                 + "TÍTULO:" + cursoNome
                 + "\nCÓDIGO:" + cursoCodigo,
@@ -339,6 +352,11 @@ public class TelaCadCursos extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseExited
+
+
+    }//GEN-LAST:event_jTable1MouseExited
 
     /**
      * @param args the command line arguments
