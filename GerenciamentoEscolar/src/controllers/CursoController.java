@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import servicos.Funcoes;
 import servicos.Conexao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,7 @@ import modelos.Curso;
  *
  * @author Taffarel Xavier <taffarel_deus@hotmail.com>
  */
-public class CursoController {
+public class CursoController extends Funcoes{
 
     /**
      * Inclui um novo curso
@@ -123,21 +124,5 @@ public class CursoController {
             //JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return null;
-    }
-
-    /**
-     * <p>
-     * Retorna o total de registros de uma busca.</p>
-     *
-     * @param rs ResultSet
-     * @return Inteiro
-     * @throws SQLException
-     */
-    public static int getTotalDeRegistros(ResultSet rs) throws SQLException {
-        int total;
-        rs.last();
-        total = rs.getRow();
-        rs.beforeFirst();
-        return total;
     }
 }

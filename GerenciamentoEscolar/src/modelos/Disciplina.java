@@ -11,4 +11,7 @@ package modelos;
  */
 public class Disciplina {
     
+    private String nomeDisciplina;
+    private int codigoDisciplina;
+
 }

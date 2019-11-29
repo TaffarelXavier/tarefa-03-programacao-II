@@ -7,8 +7,22 @@ package modelos;
 
 /**
  *
- * @author Taffrel Xavier <taffarel_deus@hotmail.com>
+ * @author Taffarel Xavier <taffarel_deus@hotmail.com>
  */
 public class Matricula {
     
+    private int codigoALuno;
+    private int codigoTurma;
+    private double media;
+    private String resultado;
+
+    public Matricula(int codigoALuno, int codigoTurma, double media, String resultado) {
+        this.codigoALuno = codigoALuno;
+        this.codigoTurma = codigoTurma;
+        this.media = media;
+        this.resultado = resultado;
+    }
+    
+    
+
 }

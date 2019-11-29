@@ -10,5 +10,13 @@ package modelos;
  * @author Taffrel Xavier <taffarel_deus@hotmail.com>
  */
 public class Aluno {
-    
+
+    private String nomeALuno;
+    private int codigoAluno;
+
+    public Aluno(String nomeALuno, int codigoAluno) {
+        this.nomeALuno = nomeALuno;
+        this.codigoAluno = codigoAluno;
+    }
+
 }

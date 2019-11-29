@@ -5,6 +5,8 @@
  */
 package telas;
 
+import java.awt.Color;
+
 /**
  *
  * @author ancelmocastro
@@ -19,7 +21,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
         //executar a tela maximizada...
         setExtendedState(MAXIMIZED_BOTH);
-        
+        getContentPane().setBackground(new Color(244, 246, 246));
     }
 
     /**
@@ -35,6 +37,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jbCursos = new javax.swing.JButton();
         jbAluno = new javax.swing.JButton();
         jbMatricula = new javax.swing.JButton();
+        jbMatricula1 = new javax.swing.JButton();
+        jbMatricula2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
@@ -57,8 +62,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Gerenciamento Escolar");
+        setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(1000, 600));
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 255));
+        jPanel1.setBackground(new java.awt.Color(116, 207, 112));
 
         jbCursos.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         jbCursos.setForeground(new java.awt.Color(102, 102, 255));
@@ -82,6 +89,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jbAluno.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbAluno.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbAluno.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbAluno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAlunoActionPerformed(evt);
+            }
+        });
 
         jbMatricula.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         jbMatricula.setForeground(new java.awt.Color(102, 102, 255));
@@ -91,6 +103,39 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jbMatricula.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbMatricula.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbMatricula.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbMatricula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbMatriculaActionPerformed(evt);
+            }
+        });
+
+        jbMatricula1.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jbMatricula1.setForeground(new java.awt.Color(102, 102, 255));
+        jbMatricula1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Science-Classroom-icon.png"))); // NOI18N
+        jbMatricula1.setText("Turmas");
+        jbMatricula1.setToolTipText("Realiza matrículas de Alunos cadastrados");
+        jbMatricula1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbMatricula1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbMatricula1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbMatricula1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbMatricula1ActionPerformed(evt);
+            }
+        });
+
+        jbMatricula2.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jbMatricula2.setForeground(new java.awt.Color(102, 102, 255));
+        jbMatricula2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Books-icon.png"))); // NOI18N
+        jbMatricula2.setText("Disciplinas");
+        jbMatricula2.setToolTipText("Realiza matrículas de Alunos cadastrados");
+        jbMatricula2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbMatricula2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbMatricula2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbMatricula2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbMatricula2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -103,18 +148,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jbAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbMatricula1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbMatricula2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbCursos, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                    .addComponent(jbAluno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbMatricula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jbMatricula2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbMatricula1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbCursos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                    .addComponent(jbAluno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbMatricula, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/a4a4781ea9a21bad74cb8a535c471ce22652424b.png"))); // NOI18N
+        jLabel1.setAlignmentY(0.0F);
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
         jMenu1.setText("Sistema");
 
@@ -183,7 +241,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -191,7 +251,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addGap(46, 46, 46)
+                .addComponent(jLabel1)
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         pack();
@@ -210,6 +272,30 @@ public class TelaPrincipal extends javax.swing.JFrame {
       // TODO add your handling code here:
       jbCursos.doClick();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jbAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlunoActionPerformed
+        // TODO add your handling code here:
+              TelaCadastrarAluno telaAluno = new TelaCadastrarAluno
+        (this, rootPaneCheckingEnabled);
+      
+      telaAluno.setVisible(true);
+    }//GEN-LAST:event_jbAlunoActionPerformed
+
+    private void jbMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMatriculaActionPerformed
+        // TODO add your handling code here:
+        TelaCadastrarAluno telaAluno = new TelaCadastrarAluno
+        (this, rootPaneCheckingEnabled);
+      
+      telaAluno.setVisible(true);
+    }//GEN-LAST:event_jbMatriculaActionPerformed
+
+    private void jbMatricula1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMatricula1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbMatricula1ActionPerformed
+
+    private void jbMatricula2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMatricula2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbMatricula2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,14 +325,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaPrincipal().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new TelaPrincipal().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -270,5 +355,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jbAluno;
     private javax.swing.JButton jbCursos;
     private javax.swing.JButton jbMatricula;
+    private javax.swing.JButton jbMatricula1;
+    private javax.swing.JButton jbMatricula2;
     // End of variables declaration//GEN-END:variables
 }
