@@ -19,7 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `sge_db`
 --
-
+create database if not exists sge_db;
+use sge_db;
 -- --------------------------------------------------------
 
 --
