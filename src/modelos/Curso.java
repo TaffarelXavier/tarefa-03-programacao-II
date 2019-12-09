@@ -14,13 +14,18 @@ public class Curso {
     private String nome;
     private int id;
 
-    public String getNome() {
-        return nome;
-    }
-
+    /**
+     *
+     * @param nome
+     * @param id
+     */
     public Curso(String nome, int id) {
         this.nome = nome;
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     public void setNome(String nome) {

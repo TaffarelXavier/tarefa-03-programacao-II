@@ -9,6 +9,7 @@ import servicos.Funcoes;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import modelos.Aluno;
 import servicos.Conexao;
 
@@ -37,13 +38,13 @@ public class AlunoController extends Funcoes {
         return 0;
     }
 
-    public static Aluno[] listarAlunosCursos() throws Exception {
+    public static Aluno[] listarTodos() throws Exception {
 
         PreparedStatement stm;
 
         try {
 
-            stm = Conexao.conectar().prepareStatement("SELECT * FROM curso;");
+            stm = Conexao.conectar().prepareStatement("SELECT * FROM aluno;");
 
             ResultSet rs = stm.executeQuery();
 
@@ -57,6 +58,7 @@ public class AlunoController extends Funcoes {
                 int i = 0;
 
                 while (rs.next()) {
+                    System.out.println(rs.getString("nomealuno"));
                     alunos[i] = new Aluno(rs.getString("nomealuno"), rs.getInt("codaluno"));
                     ++i;
                 }
@@ -65,7 +67,7 @@ public class AlunoController extends Funcoes {
             }
 
         } catch (SQLException ex) {
-            //JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return null;
     }
