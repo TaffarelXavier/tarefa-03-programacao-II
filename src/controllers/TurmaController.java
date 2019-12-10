@@ -26,18 +26,23 @@ public class TurmaController extends Funcoes {
 
     /**
      *
-     * @param disciplina
-     * @param creditos
+     * @param periodLetivo
+     * @param sala
+     * @param turno
+     * @param capacidade
      * @return
      */
-    public static int incluir(String disciplina, String creditos) {
+    public static int incluir(String periodLetivo, String sala, String turno, String capacidade) {
         try {
-            String sql = "INSERT INTO disciplina (titulo, creditos) VALUES (?,?);";
+            String sql = "INSERT INTO turma (`periodoletivo`, `sala`, "
+                    + "`turno`, `capacidade`) VALUES (?,?,?,?);";
             PreparedStatement preparedStatement = Conexao.conectar().prepareStatement(sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            preparedStatement.setString(1, disciplina.trim());
-            preparedStatement.setString(2, creditos.trim());
+            preparedStatement.setString(1, periodLetivo.trim());
+            preparedStatement.setString(2, sala.trim());
+            preparedStatement.setString(3, turno.trim());
+            preparedStatement.setString(4, capacidade.trim());
             return preparedStatement.executeUpdate();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Houve um erro!", 1);
@@ -103,8 +108,7 @@ public class TurmaController extends Funcoes {
         PreparedStatement stm;
 
         try {
-            String sqlJoin = "SELECT * FROM `turma` AS t1 JOIN professor AS t2\n"
-                    + "ON t1.codprof = t2.prof_id";
+            String sqlJoin = "SELECT * FROM `turma`";
 
             stm = Conexao.conectar().prepareStatement(sqlJoin);
 
@@ -118,11 +122,13 @@ public class TurmaController extends Funcoes {
 
                 int i = 0;
 
+                //int codigoTurma, String periodLetivo, String codigoSala, String bloco, int codigoProfessor, int codigoDisciplina
                 while (rs.next()) {
                     turmas[i] = new Turma(
                             rs.getInt("codturma"),
                             rs.getString("periodoletivo"),
                             rs.getString("sala"),
+                            rs.getString("bloco"),
                             rs.getInt("codprof"),
                             rs.getInt("coddisc")
                     );

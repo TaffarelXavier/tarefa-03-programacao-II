@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
@@ -21,7 +21,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `sge_db`
 --
-
+drop database if exists sge_db;
+create database sge_db;
+use sge_db;
 -- --------------------------------------------------------
 
 --

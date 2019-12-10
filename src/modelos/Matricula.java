@@ -7,7 +7,7 @@ package modelos;
 
 /**
  *
- * @author Taffarel Xavier <taffarel_deus@hotmail.com>
+ * @author Taffaarel Xavier <taffarel_deus@hotmail.com>
  */
 public class Matricula {
 
@@ -15,13 +15,16 @@ public class Matricula {
     private int codigoTurma;
     private double media;
     private String resultado;
+    private String dataMatricula;
 
-    public Matricula(int codigoALuno, int codigoTurma, double media, String resultado) {
+    public Matricula(int codigoALuno, int codigoTurma, double media, String resultado, String dataMatricula) {
         this.codigoALuno = codigoALuno;
         this.codigoTurma = codigoTurma;
         this.media = media;
         this.resultado = resultado;
+        this.dataMatricula = dataMatricula;
     }
+
 
     public int getCodigoALuno() {
         return codigoALuno;
@@ -53,6 +56,14 @@ public class Matricula {
 
     public void setResultado(String resultado) {
         this.resultado = resultado;
+    }
+
+    public String getDataMatricula() {
+        return dataMatricula;
+    }
+
+    public void setDataMatricula(String dataMatricula) {
+        this.dataMatricula = dataMatricula;
     }
 
 }

@@ -9,17 +9,19 @@ public class Turma {
     private int codigoTurma;
     private String periodLetivo;
     private String codigoSala;
+    private String bloco;
     private int codigoProfessor;
     private int codigoDisciplina;
 
-    public Turma(int codigoTurma, String periodLetivo, String codigoSala, int codigoProfessor, int codigoDisciplina) {
+    public Turma(int codigoTurma, String periodLetivo, String codigoSala, String bloco, int codigoProfessor, int codigoDisciplina) {
         this.codigoTurma = codigoTurma;
         this.periodLetivo = periodLetivo;
         this.codigoSala = codigoSala;
+        this.bloco = bloco;
         this.codigoProfessor = codigoProfessor;
         this.codigoDisciplina = codigoDisciplina;
     }
-
+    
     public int getCodigoTurma() {
         return codigoTurma;
     }
@@ -58,6 +60,14 @@ public class Turma {
 
     public void setCodigoDisciplina(int codigoDisciplina) {
         this.codigoDisciplina = codigoDisciplina;
+    }
+
+    public String getBloco() {
+        return bloco;
+    }
+
+    public void setBloco(String bloco) {
+        this.bloco = bloco;
     }
 
 }

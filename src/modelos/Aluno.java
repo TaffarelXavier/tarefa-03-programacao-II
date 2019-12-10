@@ -7,29 +7,41 @@ package modelos;
 
 /**
  *
- * @author Taffrel Xavier <taffarel_deus@hotmail.com>
+ * @author Taffarel Xavier <taffarel_deus@hotmail.com>
  */
 public class Aluno {
-
-    private String nomeALuno;
+    
     private int codigoAluno;
+    private String nome;
+    private String dataDeNascimento;
+    private String CPF;
+    private String email;
+    private String telefone;
 
     /**
      * 
      * @param nomeALuno
-     * @param codigoAluno 
+     * @param codigoAluno
+     * @param dataDeNascimento
+     * @param CPF
+     * @param email
+     * @param telefone 
      */
-    public Aluno(String nomeALuno, int codigoAluno) {
-        this.nomeALuno = nomeALuno;
+    public Aluno(String nomeALuno, int codigoAluno, String dataDeNascimento, String CPF, String email, String telefone) {
+        this.nome = nomeALuno;
         this.codigoAluno = codigoAluno;
+        this.dataDeNascimento = dataDeNascimento;
+        this.CPF = CPF;
+        this.email = email;
+        this.telefone = telefone;
     }
 
-    public String getNomeALuno() {
-        return nomeALuno;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeALuno(String nomeALuno) {
-        this.nomeALuno = nomeALuno;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public int getCodigoAluno() {
@@ -38,6 +50,38 @@ public class Aluno {
 
     public void setCodigoAluno(int codigoAluno) {
         this.codigoAluno = codigoAluno;
+    }
+
+    public String getDataDeNascimento() {
+        return dataDeNascimento;
+    }
+
+    public void setDataDeNascimento(String dataDeNascimento) {
+        this.dataDeNascimento = dataDeNascimento;
+    }
+
+    public String getCPF() {
+        return CPF;
+    }
+
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
     
     

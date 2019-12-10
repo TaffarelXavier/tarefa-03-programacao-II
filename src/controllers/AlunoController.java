@@ -67,8 +67,14 @@ public class AlunoController extends Funcoes {
                 int i = 0;
 
                 while (rs.next()) {
-                    System.out.println(rs.getString("nomealuno"));
-                    alunos[i] = new Aluno(rs.getString("nomealuno"), rs.getInt("codaluno"));
+                  //String nomeALuno, int codigoAluno, String , String , String , String 
+                    alunos[i] = new Aluno(rs.getString("nomealuno"),
+                            rs.getInt("codaluno"),
+                            rs.getString("data_nascimento"),
+                            rs.getString("cpf"),
+                            rs.getString("email"),
+                            rs.getString("telefone")
+                    );
                     ++i;
                 }
 

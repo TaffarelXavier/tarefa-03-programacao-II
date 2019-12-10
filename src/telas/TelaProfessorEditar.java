@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelos.Disciplina;
 import modelos.ProfessorDisciplina;
+import servicos.ComboItem;
 
 /**
  *
@@ -60,36 +61,36 @@ public class TelaProfessorEditar extends javax.swing.JDialog {
         prencheDisciplinasPorProfessor();
     }
 
-    class ComboItem {
-
-        private int value;
-        private String label;
-
-        public ComboItem(int value, String label) {
-            this.value = value;
-            this.label = label;
-        }
-
-        public String toString() {
-            return label;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public void setValue(int value) {
-            this.value = value;
-        }
-
-        public String getLabel() {
-            return label;
-        }
-
-        public void setLabel(String label) {
-            this.label = label;
-        }
-    }
+//    class ComboItem {
+//
+//        private int value;
+//        private String label;
+//
+//        public ComboItem(int value, String label) {
+//            this.value = value;
+//            this.label = label;
+//        }
+//
+//        public String toString() {
+//            return label;
+//        }
+//
+//        public int getValue() {
+//            return value;
+//        }
+//
+//        public void setValue(int value) {
+//            this.value = value;
+//        }
+//
+//        public String getLabel() {
+//            return label;
+//        }
+//
+//        public void setLabel(String label) {
+//            this.label = label;
+//        }
+//    }
 
     final void prencheDisciplinasPorProfessor() {
 
@@ -442,8 +443,6 @@ public class TelaProfessorEditar extends javax.swing.JDialog {
         JComboBox comboBox = (JComboBox) evt.getSource();
 
         ComboItem item = (ComboItem) comboBox.getSelectedItem();
-
-        System.out.println(item.getLabel() + " : " + item.getValue());
 
         habilitarBotoes();
 

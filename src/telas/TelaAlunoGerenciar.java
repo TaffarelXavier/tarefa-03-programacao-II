@@ -5,14 +5,16 @@
  */
 package telas;
 
+import classesestaticas.AlunoStatico;
 import controllers.AlunoController;
-import controllers.CursoController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelos.Aluno;
+
+
+//Atualizar  a data da matrícula e o id do curso na tabela do aluno e salvar os ids das disciplinas em uma nova tabela.
 
 /**
  *
@@ -53,14 +55,14 @@ public class TelaAlunoGerenciar extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "TÍTULO"
+                "ID", "NOME", "CPF", "DATA DE NASCIMENTO"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -81,6 +83,13 @@ public class TelaAlunoGerenciar extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(jTableAluno);
+        if (jTableAluno.getColumnModel().getColumnCount() > 0) {
+            jTableAluno.getColumnModel().getColumn(0).setMinWidth(50);
+            jTableAluno.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTableAluno.getColumnModel().getColumn(1).setMinWidth(200);
+            jTableAluno.getColumnModel().getColumn(1).setMaxWidth(250);
+            jTableAluno.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastrar Novo Aluno", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
@@ -171,6 +180,20 @@ public class TelaAlunoGerenciar extends javax.swing.JDialog {
         int id = Integer.parseInt(model.getValueAt(rowIndex, 0).toString());
         //Pega o nome da linha selecionada:
         String nome = model.getValueAt(rowIndex, 1).toString();
+        
+        String cpf = model.getValueAt(rowIndex, 2).toString();
+        
+        String dataNascimento = model.getValueAt(rowIndex, 3).toString();
+            
+        AlunoStatico.setTipoDeAcao("alteracao");
+        AlunoStatico.setCodigoAluno(id);
+        AlunoStatico.setNome(nome);
+        AlunoStatico.setCPF(cpf);
+        AlunoStatico.setDataDeNascimento(dataNascimento);
+        
+        if (evt.getClickCount() > 1) {
+            new TelaAlunoIncluirEditar(null, true).setVisible(true);
+        }
 
     }//GEN-LAST:event_jTableAlunoMouseClicked
 
@@ -180,21 +203,23 @@ public class TelaAlunoGerenciar extends javax.swing.JDialog {
     /**
      * Preenche a tabela (jTable1) com os dados de cursos vindo do banco de dados
      */
-    
+
     void preencherDadosNaTabela() {
 
-        String[] columnNames = {"ID", "TÍTULO"};
+        String[] columnNames = {"ID", "NOME", "CPF", "DATA DE NASCIMENTO"};
 
         try {
             Aluno alunos[] = AlunoController.listarTodos();
 
-            Object[][] data = new Object[alunos.length][2]; //O 2, aqui, é a quantidade de colunas
+            Object[][] data = new Object[alunos.length][4]; //O 2, aqui, é a quantidade de colunas
 
             int index = 0;
 
             for (Aluno s : alunos) {
                 data[index][0] = s.getCodigoAluno(); //
-                data[index][1] = s.getNomeALuno(); //
+                data[index][1] = s.getNome(); //
+                data[index][2] = s.getCPF(); //
+                data[index][3] = s.getDataDeNascimento(); //
                 index++;
             }
 

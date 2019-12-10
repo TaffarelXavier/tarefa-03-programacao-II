@@ -94,7 +94,7 @@ public class CursoController extends Funcoes{
      *
      * @return @throws Exception
      */
-    public static Curso[] listarTodosCursos() throws Exception {
+    public static Curso[] listarTudo() throws Exception {
 
         PreparedStatement stm;
 

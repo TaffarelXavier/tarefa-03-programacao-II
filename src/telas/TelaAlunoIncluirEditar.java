@@ -5,23 +5,77 @@
  */
 package telas;
 
+import classesestaticas.AlunoStatico;
 import controllers.AlunoController;
+import controllers.AlunoDisciplinaController;
+import controllers.CursoController;
+import controllers.DisciplinaController;
+import controllers.MatriculaController;
+import controllers.ProfessorController;
+import controllers.TurmaController;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import modelos.Curso;
+import modelos.Disciplina;
+import modelos.Professor;
+import modelos.Turma;
+import servicos.ComboItem;
 
 /**
  *
- * @author Taffrel Xavier <taffarel_deus@hotmail.com>
+ * @author Taffarel Xavier <taffarel_deus@hotmail.com>
  */
 public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
 
+    private final int alunoID;
+
     /**
-     * Creates new form TelaAlunoIncluirEditar
+     *
+     * @param parent
+     * @param modal
      */
     public TelaAlunoIncluirEditar(java.awt.Frame parent, boolean modal) {
+
         super(parent, modal);
+
         initComponents();
+
+        this.alunoID = AlunoStatico.getCodigoAluno();
+
+        jTextFieldNome.setText(AlunoStatico.getNome());
+
+        jTextFieldDataNascimento.setText(AlunoStatico.getDataDeNascimento());
+
+        jTextFieldCPF.setText(AlunoStatico.getCPF());
+
+        jTextFieldTelefone.setText(AlunoStatico.getTelefone());
+
     }
 
+    void naoPermitirEdicaoJTable() {
+
+        TableModel model = new DefaultTableModel() {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        jTableDisciplinas.setModel(model);
+
+    }
+
+    /**
+     * Para permitir ou não edição de algum elemento
+     *
+     * @param permitir
+     */
     void permitirEdicao(boolean permitir) {
         if (permitir) {
             jPanelMatricula.setEnabled(permitir);
@@ -29,6 +83,8 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
             jComboBoxCurso.setEnabled(permitir);
             jComboBoxDisciplinas.setEnabled(permitir);
             jTableDisciplinas.setEnabled(permitir);
+            jComboBoxTurma.setEnabled(permitir);
+            jTextFieldResultado.setEnabled(permitir);
         }
     }
 
@@ -49,6 +105,15 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jComboBoxCurso = new javax.swing.JComboBox<>();
+        jLabelCurso_Id = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jComboBoxTurma = new javax.swing.JComboBox<>();
+        jLabelTurma_Id = new javax.swing.JLabel();
+        jTextFieldResultado = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jTextFieldEmail = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -76,6 +141,11 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
 
         jComboBoxDisciplinas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione..." }));
         jComboBoxDisciplinas.setEnabled(false);
+        jComboBoxDisciplinas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxDisciplinasActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText("Disciplinas:");
@@ -90,7 +160,17 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
         ));
         jTableDisciplinas.setEnabled(false);
         jTableDisciplinas.setRowHeight(25);
+        jTableDisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDisciplinasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableDisciplinas);
+        if (jTableDisciplinas.getColumnModel().getColumnCount() > 0) {
+            jTableDisciplinas.getColumnModel().getColumn(0).setMinWidth(50);
+            jTableDisciplinas.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTableDisciplinas.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setText("Disciplinas para este aluno:");
@@ -100,6 +180,46 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
 
         jComboBoxCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione..." }));
         jComboBoxCurso.setEnabled(false);
+        jComboBoxCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCursoActionPerformed(evt);
+            }
+        });
+
+        jLabelCurso_Id.setText("Curso ID");
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel10.setText("Turma:");
+
+        jComboBoxTurma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione..." }));
+        jComboBoxTurma.setEnabled(false);
+        jComboBoxTurma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxTurmaActionPerformed(evt);
+            }
+        });
+
+        jLabelTurma_Id.setText("Turma ID");
+
+        jTextFieldResultado.setEnabled(false);
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel11.setText("Resultado:");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 153, 102));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Dê um duplo clique sobre algum registro para removê-lo.");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanelMatriculaLayout = new javax.swing.GroupLayout(jPanelMatricula);
         jPanelMatricula.setLayout(jPanelMatriculaLayout);
@@ -107,42 +227,81 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
             jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMatriculaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jComboBoxDisciplinas, 0, 272, Short.MAX_VALUE)
-                    .addComponent(jTextFieldDataMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(jComboBoxCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanelMatriculaLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanelMatriculaLayout.createSequentialGroup()
+                                .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelMatriculaLayout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addGap(101, 101, 101)
+                                        .addComponent(jLabelCurso_Id))
+                                    .addComponent(jComboBoxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel10)
+                                    .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabelTurma_Id)
+                                        .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jComboBoxTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel7)))
+                                    .addGroup(jPanelMatriculaLayout.createSequentialGroup()
+                                        .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldDataMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel6))
+                                        .addGap(15, 15, 15)
+                                        .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel11)
+                                            .addComponent(jTextFieldResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(34, 34, 34)
+                                .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane2))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelMatriculaLayout.createSequentialGroup()
+                        .addComponent(jComboBoxDisciplinas, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanelMatriculaLayout.setVerticalGroup(
             jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMatriculaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelMatriculaLayout.createSequentialGroup()
-                        .addComponent(jTextFieldDataMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabel9)
-                        .addGap(9, 9, 9)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldDataMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabelTurma_Id))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabelCurso_Id))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBoxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel7)
+                        .addGap(1, 1, 1))
+                    .addGroup(jPanelMatriculaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxDisciplinas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBoxDisciplinas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados Básicos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
@@ -208,7 +367,7 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
                                     .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel5)
                                 .addGap(185, 185, 185))
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -254,7 +413,11 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton2.setText("Matricular");
-        jButton2.setEnabled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -284,8 +447,8 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelMatricula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -293,9 +456,9 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanelMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelMatricula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -319,28 +482,133 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        String nome = jTextFieldNome.getText();
-        
-        String dataNascimento = jTextFieldDataNascimento.getText();
-        
-        String cpf = jTextFieldCPF.getText();
-        
-        String telefone = jTextFieldTelefone.getText();
-        
-        String email = jTextFieldEmail.getText();
-        
-        if (AlunoController.incluir(nome, dataNascimento, cpf, telefone, email) > 0) {
-            int dialogResult = JOptionPane.showConfirmDialog(null, "Deseja matricular este aluno agora?", "Atenção",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (dialogResult == JOptionPane.YES_OPTION) {
-                permitirEdicao(true);
+        if (AlunoStatico.getTipoDeAcao().equals("alteracao")) { //Alteração
+
+            String dataMatricula = jTextFieldDataMatricula.getText();
+
+            String resultado = jTextFieldResultado.getText();
+
+            int cursoID = Integer.parseInt(jLabelCurso_Id.getText());
+
+            int turmaId = Integer.parseInt(jLabelTurma_Id.getText());
+
+            //Matrícula
+            int matriculaId = MatriculaController.incluir(this.alunoID, turmaId, 7.5, cursoID, dataMatricula, resultado);
+
+            DefaultTableModel model = (DefaultTableModel) jTableDisciplinas.getModel();
+
+            int nRow = model.getRowCount();
+
+            //Pega os IDs das disciplinas:
+            for (int i = 0; i < nRow; i++) {
+                AlunoDisciplinaController.incluir(this.alunoID, Integer.parseInt(model.getValueAt(i, 0).toString()), matriculaId);
             }
 
         } else {
+            //Inclusão
+            String nome = jTextFieldNome.getText();
 
+            String dataNascimento = jTextFieldDataNascimento.getText();
+
+            String cpf = jTextFieldCPF.getText();
+
+            String telefone = jTextFieldTelefone.getText();
+
+            String email = jTextFieldEmail.getText();
+
+            if (AlunoController.incluir(nome, dataNascimento, cpf, telefone, email) > 0) {
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Deseja matricular este aluno agora?", "Atenção",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    permitirEdicao(true);
+                }
+
+            } else {
+
+            }
         }
 
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+
+            // Adiciona cursos ao combobox de cursos
+            Curso cursos[] = CursoController.listarTudo();
+
+            Vector model = new Vector();
+
+            for (Curso curso : cursos) {
+                model.addElement(new ComboItem(curso.getId(), curso.getNome()));
+            }
+
+            jComboBoxCurso.setModel(new javax.swing.DefaultComboBoxModel<>(model));
+            //Fim
+
+            // Adiciona Disciplinas ao combobox de Disciplinas
+            Disciplina disciplinas[] = DisciplinaController.listarTudo();
+
+            Vector modelDisc = new Vector();
+
+            for (Disciplina disciplina : disciplinas) {
+                modelDisc.addElement(new ComboItem(disciplina.getCodigoDisciplina(), disciplina.getNomeDisciplina()));
+            }
+
+            jComboBoxDisciplinas.setModel(new javax.swing.DefaultComboBoxModel<>(modelDisc));
+            //Fim
+
+            // Adiciona Disciplinas ao combobox de Disciplinas
+            Turma turmas[] = TurmaController.listarTudo();
+
+            Vector modelTurma = new Vector();
+
+            for (Turma turma : turmas) {
+                String textoDisplay = turma.getCodigoSala() + "- Bloco " + turma.getBloco();
+                modelTurma.addElement(new ComboItem(turma.getCodigoTurma(), textoDisplay));
+            }
+
+            jComboBoxTurma.setModel(new javax.swing.DefaultComboBoxModel<>(modelTurma));
+            //Fim
+
+            permitirEdicao(true);
+        } catch (Exception ex) {
+            Logger.getLogger(TelaAlunoIncluirEditar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBoxDisciplinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDisciplinasActionPerformed
+        // TODO add your handling code here:
+        JComboBox comboBox = (JComboBox) evt.getSource();
+
+        ComboItem item = (ComboItem) comboBox.getSelectedItem();
+
+        DefaultTableModel model = (DefaultTableModel) jTableDisciplinas.getModel();
+
+        model.addRow(new Object[]{item.getValue(), item.getLabel()});
+    }//GEN-LAST:event_jComboBoxDisciplinasActionPerformed
+
+    private void jComboBoxCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCursoActionPerformed
+        // TODO add your handling code here:
+        JComboBox comboBox = (JComboBox) evt.getSource();
+
+        ComboItem item = (ComboItem) comboBox.getSelectedItem();
+
+        jLabelCurso_Id.setText(String.valueOf(item.getValue()));
+    }//GEN-LAST:event_jComboBoxCursoActionPerformed
+
+    private void jComboBoxTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTurmaActionPerformed
+        // TODO add your handling code here:
+        JComboBox comboBox = (JComboBox) evt.getSource();
+
+        ComboItem item = (ComboItem) comboBox.getSelectedItem();
+
+        jLabelTurma_Id.setText(String.valueOf(item.getValue()));
+    }//GEN-LAST:event_jComboBoxTurmaActionPerformed
+
+    private void jTableDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDisciplinasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableDisciplinasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -389,7 +657,11 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBoxCurso;
     private javax.swing.JComboBox<String> jComboBoxDisciplinas;
+    private javax.swing.JComboBox<String> jComboBoxTurma;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -398,16 +670,21 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelCurso_Id;
+    private javax.swing.JLabel jLabelTurma_Id;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelMatricula;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTableDisciplinas;
     private javax.swing.JTextField jTextFieldCPF;
     private javax.swing.JTextField jTextFieldDataMatricula;
     private javax.swing.JTextField jTextFieldDataNascimento;
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldNome;
+    private javax.swing.JTextField jTextFieldResultado;
     private javax.swing.JTextField jTextFieldTelefone;
     // End of variables declaration//GEN-END:variables
 }

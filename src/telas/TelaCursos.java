@@ -38,7 +38,7 @@ public class TelaCursos extends javax.swing.JDialog {
         String[] columnNames = {"ID", "TÍTULO"};
 
         try {
-            Curso cursos[] = CursoController.listarTodosCursos();
+            Curso cursos[] = CursoController.listarTudo();
 
             Object[][] data = new Object[cursos.length][2]; //O 2, aqui, é a quantidade de colunas
 
