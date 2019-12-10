@@ -61,7 +61,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Gerenciamento Escolar");
-        setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1000, 600));
 
         jPanel1.setBackground(new java.awt.Color(116, 207, 112));
@@ -97,7 +96,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jbMatricula.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         jbMatricula.setForeground(new java.awt.Color(102, 102, 255));
         jbMatricula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Teacher-male-icon.png"))); // NOI18N
-        jbMatricula.setText("Matricular Aluno");
+        jbMatricula.setText("Gerenciar Alunos");
         jbMatricula.setToolTipText("Realiza matrículas de Alunos cadastrados");
         jbMatricula.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbMatricula.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -187,8 +186,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/a4a4781ea9a21bad74cb8a535c471ce22652424b.png"))); // NOI18N
         jLabel1.setAlignmentY(0.0F);
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
         jMenu1.setText("Sistema");
 
@@ -297,12 +294,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jbAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlunoActionPerformed
         // TODO add your handling code here:
-        abrirTela(new TelaAluno(this, rootPaneCheckingEnabled));
+        new TelaAlunoIncluirEditar(null, rootPaneCheckingEnabled).setVisible(true);
     }//GEN-LAST:event_jbAlunoActionPerformed
 
     private void jbMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMatriculaActionPerformed
         // TODO add your handling code here:
-        abrirTela(new TelaAluno(this, rootPaneCheckingEnabled));
+        abrirTela(new TelaAlunoGerenciar(this, rootPaneCheckingEnabled));
     }//GEN-LAST:event_jbMatriculaActionPerformed
 
     private void jbMatricula1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMatricula1ActionPerformed

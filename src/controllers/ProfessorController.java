@@ -21,22 +21,26 @@ import static servicos.Funcoes.getTotalDeRegistros;
 public class ProfessorController {
 
     /**
-     *
-     * @param disciplina
-     * @param creditos
-     * @return
+     * 
+     * @param cpf
+     * @param nome
+     * @param status
+     * @param nivel
+     * @return 
      */
-    public static int incluir(String disciplina, String creditos) {
+    public static int incluir(String cpf, String nome, String status, String nivel) {
         try {
-            String sql = "INSERT INTO disciplina (titulo, creditos) VALUES (?,?);";
+            String sql = "INSERT INTO professores (prof_cpf, prof_nome, prof_senha, prof_status, prof_nivel) VALUES (?,?,'',?,?);";
             PreparedStatement preparedStatement = Conexao.conectar().prepareStatement(sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            preparedStatement.setString(1, disciplina.trim());
-            preparedStatement.setString(2, creditos.trim());
+            preparedStatement.setString(1, cpf.trim());
+            preparedStatement.setString(2, nome.trim());
+            preparedStatement.setString(3, status.trim());
+            preparedStatement.setString(4, nivel.trim());
             return preparedStatement.executeUpdate();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Houve um erro!", 1);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Houve um erro!", 2);
         }
         return 0;
     }
@@ -52,8 +56,8 @@ public class ProfessorController {
      */
     public static int atualizar(String cpf, String nome, String status, String nivel, int codigoProfessor) {
         try {
-            String sql = "UPDATE `professor` SET `prof_cpf` = ?, `prof_nome`= ?, `prof_status` = ?,"
-                    + " `prof_nivel` = ? WHERE `professor`.`prof_id` = ?;";
+            String sql = "UPDATE `professores` SET `prof_cpf` = ?, `prof_nome`= ?, `prof_status` = ?,"
+                    + " `prof_nivel` = ? WHERE `professores`.`prof_id` = ?;";
             PreparedStatement preparedStatement = Conexao.conectar().prepareStatement(sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
@@ -71,20 +75,20 @@ public class ProfessorController {
 
     /**
      *
-     * @param professorId
+     * @param professoresId
      * @return
      */
-    public static int excluir(int professorId) {
+    public static int excluir(int professoresId) {
         try {
 
-            String sql = "DELETE FROM professor WHERE prof_id = ?;";
+            String sql = "DELETE FROM professores WHERE prof_id = ?;";
             PreparedStatement prest;
             try {
                 prest = Conexao.conectar().prepareStatement(sql);
-                prest.setInt(1, professorId);
+                prest.setInt(1, professoresId);
                 prest.executeUpdate();
                 Conexao.conectar().commit();
-                JOptionPane.showMessageDialog(null, "The record has been deleted successfully.");
+                JOptionPane.showMessageDialog(null, "O registro foi excluído com sucesso!");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "The record has been deleted successfully.");
             }
@@ -104,7 +108,7 @@ public class ProfessorController {
 
         try {
 
-            stm = Conexao.conectar().prepareStatement("SELECT * FROM professor;");
+            stm = Conexao.conectar().prepareStatement("SELECT * FROM professores;");
 
             ResultSet rs = stm.executeQuery();
 
@@ -112,12 +116,12 @@ public class ProfessorController {
                 System.out.println("Nenhum registro encontrado.");
             } else {
 
-                Professor[] professores = new Professor[getTotalDeRegistros(rs)];
+                Professor[] professoreses = new Professor[getTotalDeRegistros(rs)];
 
                 int i = 0;
 
                 while (rs.next()) {
-                    professores[i] = new Professor(
+                    professoreses[i] = new Professor(
                             rs.getInt("prof_id"),
                             rs.getString("prof_cpf"),
                             rs.getString("prof_nome"),
@@ -128,7 +132,7 @@ public class ProfessorController {
                     ++i;
                 }
 
-                return professores;
+                return professoreses;
             }
 
         } catch (SQLException ex) {

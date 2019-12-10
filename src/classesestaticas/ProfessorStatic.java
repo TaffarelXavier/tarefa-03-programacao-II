@@ -16,9 +16,8 @@ public class ProfessorStatic {
     private static String CPF;
     private static String status;
     private static String nivel;
-    private static String tipo;
-    
-    
+    private static String tipo = "incluir";
+
     public static int getId() {
         return id;
     }

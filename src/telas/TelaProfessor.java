@@ -346,6 +346,7 @@ public class TelaProfessor extends javax.swing.JDialog {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        ProfessorStatic.setTipo("incluir");//Para alterar o tipo: incluir ou editar
         TelaProfessorEditar telaProfEditar = new TelaProfessorEditar(null, rootPaneCheckingEnabled);
         telaProfEditar.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed

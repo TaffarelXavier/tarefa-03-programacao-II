@@ -7,40 +7,27 @@ package telas;
 
 import classesestaticas.ProfessorStatic;
 import controllers.DisciplinaController;
+import controllers.DisciplinaProfessorController;
 import controllers.ProfessorController;
+import java.util.HashMap;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import modelos.Disciplina;
-import servicos.ComboItemAtividade;
-
-class AnyObject {
-
-    private String value;
-    private String text;
-
-    public AnyObject(String value, String text) {
-        this.value = value;
-        this.text = text;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    @Override
-    public String toString() {
-        return text;
-    }
-}
+import modelos.ProfessorDisciplina;
 
 /**
  *
  * @author Taffrel Xavier <taffarel_deus@hotmail.com>
  */
 public class TelaProfessorEditar extends javax.swing.JDialog {
+
+    private HashMap<String, Integer> mapa = null;
+    int codigoProfessor;
 
     /**
      *
@@ -52,30 +39,114 @@ public class TelaProfessorEditar extends javax.swing.JDialog {
 
         initComponents();
 
-        jTF_Id.setText(String.valueOf(ProfessorStatic.getId()));
+        System.out.println(ProfessorStatic.getTipo());
 
-        jTFNome.setText(ProfessorStatic.getNome());
+        if (ProfessorStatic.getTipo().equals("incluir")) {
+            jTF_Id.setText("");
+            jTFNome.setText("");
+            jTextField_CPF.setText("");
+        } else {
+            jTF_Id.setText(String.valueOf(ProfessorStatic.getId()));
 
-        jTextField_CPF.setText(ProfessorStatic.getCPF());
+            jTFNome.setText(ProfessorStatic.getNome());
 
-        System.out.println(ProfessorStatic.getStatus());
+            jTextField_CPF.setText(ProfessorStatic.getCPF());
 
-        prencherListaDisciplina();
+            System.out.println(ProfessorStatic.getStatus());
+
+            preecherTabelaDisciplina();
+        }
+
+        prencheDisciplinasPorProfessor();
     }
 
-    final void prencherListaDisciplina() {
+    class ComboItem {
+
+        private int value;
+        private String label;
+
+        public ComboItem(int value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public String toString() {
+            return label;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
+
+        public String getLabel() {
+            return label;
+        }
+
+        public void setLabel(String label) {
+            this.label = label;
+        }
+    }
+
+    final void prencheDisciplinasPorProfessor() {
 
         try {
             Disciplina disciplinas[] = DisciplinaController.listarTudo();
 
+            Vector model = new Vector();
+
             for (Disciplina disciplina : disciplinas) {
-                // disciplina.getNomeDisciplina()
-                jComboBoxDisciplina.addItem(new AnyObject(String.valueOf(disciplina.getCodigoDisciplina()), disciplina.getNomeDisciplina()).toString());
+                model.addElement(new ComboItem(disciplina.getCodigoDisciplina(), disciplina.getNomeDisciplina()));
             }
 
+            jComboBoxDisciplina.setModel(new javax.swing.DefaultComboBoxModel<>(model));
         } catch (Exception e) {
         }
 
+    }
+
+    void preecherTabelaDisciplina() {
+
+        String[] columnNames = {"ID", "TÍTULO DISCIPLINA"};
+
+        try {
+            if (ProfessorStatic.getId() > 0) {
+
+                ProfessorDisciplina professorDisciplina[];
+
+                professorDisciplina = DisciplinaProfessorController.listarDisciplinasPorProfessor(ProfessorStatic.getId());
+
+                if (professorDisciplina != null) {
+                    
+                    Object[][] data = new Object[professorDisciplina.length][2]; //O 2, aqui, é a quantidade de colunas
+
+                    int index = 0;
+
+                    for (ProfessorDisciplina s : professorDisciplina) {
+                        data[index][0] = s.getDisciplina_id();
+                        data[index][1] = s.getTituloDisciplina();
+                        index++;
+                    }
+
+                    TableModel model = new DefaultTableModel(data, columnNames) {
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            return column < -1;
+                        }
+                    };
+
+                    jTableDisciplinasProfessor.setModel(model);
+                }
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(TelaProfessorEditar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -100,7 +171,7 @@ public class TelaProfessorEditar extends javax.swing.JDialog {
         jComboBoxDisciplina = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableDisciplinasProfessor = new javax.swing.JTable();
         jButtonSalvarAlteracao = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -189,16 +260,22 @@ public class TelaProfessorEditar extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Disciplinas"));
 
-        jComboBoxDisciplina.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione..." }));
+        jComboBoxDisciplina.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "asdfa", "asfd", " " }));
         jComboBoxDisciplina.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jComboBoxDisciplinaMouseClicked(evt);
             }
         });
+        jComboBoxDisciplina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxDisciplinaActionPerformed(evt);
+            }
+        });
 
-        jLabel5.setText("Disciplina:");
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel5.setText("Escolha uma ou mais disciplinas:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDisciplinasProfessor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -206,7 +283,7 @@ public class TelaProfessorEditar extends javax.swing.JDialog {
                 "ID", "TÍTULO"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableDisciplinasProfessor);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -291,9 +368,18 @@ public class TelaProfessorEditar extends javax.swing.JDialog {
 
     void salvarNovo() {
 
+        String nome = jTFNome.getText();
+        String cpf = jTextField_CPF.getText();
+        String nivel = jComboBoxNivel.getSelectedItem().toString();
+        String status = jComboBoxStatus.getSelectedItem().toString();
+
+        if (ProfessorController.incluir(cpf, nome, status, nivel) > 0) {
+            JOptionPane.showMessageDialog(null, "Professor incluso com sucesso!", "Sucesso!", 1);
+        }
     }
 
     void editarProfessor() {
+
         String codigoProfessor = jTF_Id.getText();
         String nome = jTFNome.getText();
         String cpf = jTextField_CPF.getText();
@@ -309,9 +395,19 @@ public class TelaProfessorEditar extends javax.swing.JDialog {
     }
 
     private void jButtonSalvarAlteracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarAlteracaoActionPerformed
-        // TODO add your handling code here:
+
         if (ProfessorStatic.getTipo().equals("alterar")) {
             editarProfessor();
+
+            TableModel model = jTableDisciplinasProfessor.getModel();
+
+            int profId = Integer.parseInt(jTF_Id.getText());
+
+            for (int count = 0; count < model.getRowCount(); count++) {
+                int discId = Integer.parseInt(model.getValueAt(count, 0).toString());
+                DisciplinaProfessorController.excluirDisciplinasPorProfessor(profId, discId);
+                DisciplinaProfessorController.incluir(profId, discId);
+            }
         } else {
             System.out.println("a");
             salvarNovo();
@@ -338,11 +434,24 @@ public class TelaProfessorEditar extends javax.swing.JDialog {
 
     private void jComboBoxDisciplinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxDisciplinaMouseClicked
         // TODO add your handling code here:
-        Object item = jComboBoxDisciplina.getSelectedItem();
-
-        String value = ((jComboBoxDisciplina) item).getValue();
 
     }//GEN-LAST:event_jComboBoxDisciplinaMouseClicked
+
+    private void jComboBoxDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDisciplinaActionPerformed
+        // TODO add your handling code here:
+        JComboBox comboBox = (JComboBox) evt.getSource();
+
+        ComboItem item = (ComboItem) comboBox.getSelectedItem();
+
+        System.out.println(item.getLabel() + " : " + item.getValue());
+
+        habilitarBotoes();
+
+        DefaultTableModel model = (DefaultTableModel) jTableDisciplinasProfessor.getModel();
+
+        model.addRow(new Object[]{item.getValue(), item.getLabel()});
+
+    }//GEN-LAST:event_jComboBoxDisciplinaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -403,7 +512,7 @@ public class TelaProfessorEditar extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTFNome;
     private javax.swing.JTextField jTF_Id;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableDisciplinasProfessor;
     private javax.swing.JTextField jTextField_CPF;
     // End of variables declaration//GEN-END:variables
 }
