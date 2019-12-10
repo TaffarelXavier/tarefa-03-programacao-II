@@ -1,15 +1,13 @@
-﻿-- phpMyAdmin SQL Dump
--- version 4.7.4
+-- phpMyAdmin SQL Dump
+-- version 4.6.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: 10-Dez-2019 às 03:11
--- Versão do servidor: 5.7.19
--- PHP Version: 7.1.9
+-- Host: 127.0.0.1
+-- Generation Time: 10-Dez-2019 às 16:19
+-- Versão do servidor: 5.7.14
+-- PHP Version: 7.0.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -21,18 +19,15 @@ SET time_zone = "+00:00";
 --
 -- Database: `sge_db`
 --
-drop database if exists sge_db;
-create database sge_db;
-use sge_db;
+
 -- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `aluno`
 --
 
-DROP TABLE IF EXISTS `aluno`;
-CREATE TABLE IF NOT EXISTS `aluno` (
-  `codaluno` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `aluno` (
+  `codaluno` int(11) NOT NULL,
   `nomealuno` varchar(45) DEFAULT NULL,
   `data_nascimento` varchar(45) DEFAULT NULL,
   `cpf` varchar(15) DEFAULT NULL,
@@ -41,11 +36,8 @@ CREATE TABLE IF NOT EXISTS `aluno` (
   `data_matricula` varchar(12) NOT NULL,
   `curso_codigo` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`codaluno`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `cpf` (`cpf`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `aluno`
@@ -53,7 +45,8 @@ CREATE TABLE IF NOT EXISTS `aluno` (
 
 INSERT INTO `aluno` (`codaluno`, `nomealuno`, `data_nascimento`, `cpf`, `telefone`, `email`, `data_matricula`, `curso_codigo`, `created_at`, `update_at`) VALUES
 (1, 'Taffarel Xavier', '22/08/1990', '03630413110', '6399480630', 'taffarelxavier7@gmail.com', 'aaaa', 0, '2019-12-10 01:25:41', '2019-12-10 01:26:04'),
-(2, 'Janderson', '22081454', '546466', '54546', 'sadfasdfa@mgail.com', '', 0, '2019-12-10 01:28:46', '2019-12-10 01:28:46');
+(2, 'Janderson', '22081454', '546466', '54546', 'sadfasdfa@mgail.com', '', 0, '2019-12-10 01:28:46', '2019-12-10 01:28:46'),
+(3, '', '', '', '', '', '', 0, '2019-12-10 12:12:29', '2019-12-10 12:12:29');
 
 -- --------------------------------------------------------
 
@@ -61,13 +54,31 @@ INSERT INTO `aluno` (`codaluno`, `nomealuno`, `data_nascimento`, `cpf`, `telefon
 -- Estrutura da tabela `aluno_disciplina`
 --
 
-DROP TABLE IF EXISTS `aluno_disciplina`;
-CREATE TABLE IF NOT EXISTS `aluno_disciplina` (
-  `alu_disc_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `aluno_disciplina` (
+  `alu_disc_id` bigint(20) UNSIGNED NOT NULL,
   `aluno_fk_id` bigint(20) NOT NULL,
   `disciplina_fk_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`alu_disc_id`)
+  `matricula_fk_id` bigint(20) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `aluno_disciplina`
+--
+
+INSERT INTO `aluno_disciplina` (`alu_disc_id`, `aluno_fk_id`, `disciplina_fk_id`, `matricula_fk_id`, `created_at`, `update_at`) VALUES
+(1, 1, 2, 1, '2019-12-10 15:16:08', '2019-12-10 15:16:08'),
+(2, 1, 7, 1, '2019-12-10 15:16:08', '2019-12-10 15:16:08'),
+(3, 1, 11, 1, '2019-12-10 15:16:08', '2019-12-10 15:16:08'),
+(4, 1, 21, 1, '2019-12-10 15:16:08', '2019-12-10 15:16:08'),
+(5, 2, 2, 2, '2019-12-10 15:59:47', '2019-12-10 15:59:47'),
+(6, 2, 3, 2, '2019-12-10 15:59:47', '2019-12-10 15:59:47'),
+(7, 2, 6, 2, '2019-12-10 15:59:47', '2019-12-10 15:59:47'),
+(8, 2, 7, 2, '2019-12-10 15:59:47', '2019-12-10 15:59:47'),
+(9, 2, 8, 2, '2019-12-10 15:59:47', '2019-12-10 15:59:47'),
+(10, 2, 21, 2, '2019-12-10 15:59:47', '2019-12-10 15:59:47'),
+(11, 2, 27, 2, '2019-12-10 15:59:47', '2019-12-10 15:59:47');
 
 -- --------------------------------------------------------
 
@@ -75,13 +86,10 @@ CREATE TABLE IF NOT EXISTS `aluno_disciplina` (
 -- Estrutura da tabela `curso`
 --
 
-DROP TABLE IF EXISTS `curso`;
-CREATE TABLE IF NOT EXISTS `curso` (
-  `codcurso` int(11) NOT NULL AUTO_INCREMENT,
-  `nomecurso` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`codcurso`),
-  UNIQUE KEY `nomecurso` (`nomecurso`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+CREATE TABLE `curso` (
+  `codcurso` int(11) NOT NULL,
+  `nomecurso` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `curso`
@@ -100,13 +108,11 @@ INSERT INTO `curso` (`codcurso`, `nomecurso`) VALUES
 -- Estrutura da tabela `disciplina`
 --
 
-DROP TABLE IF EXISTS `disciplina`;
-CREATE TABLE IF NOT EXISTS `disciplina` (
-  `coddisc` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `disciplina` (
+  `coddisc` int(11) NOT NULL,
   `titulo` varchar(45) DEFAULT NULL,
-  `creditos` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`coddisc`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+  `creditos` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `disciplina`
@@ -170,15 +176,25 @@ INSERT INTO `disciplina` (`coddisc`, `titulo`, `creditos`) VALUES
 -- Estrutura da tabela `matricula`
 --
 
-DROP TABLE IF EXISTS `matricula`;
-CREATE TABLE IF NOT EXISTS `matricula` (
-  `matricula_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `matricula` (
+  `matricula_id` int(11) NOT NULL,
   `codaluno` int(11) DEFAULT NULL,
   `codturma` int(11) DEFAULT NULL,
+  `curso_fk_id` bigint(20) NOT NULL,
   `media` varchar(45) DEFAULT NULL,
+  `data_matricula` varchar(15) NOT NULL,
   `resultado` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`matricula_id`)
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `matricula`
+--
+
+INSERT INTO `matricula` (`matricula_id`, `codaluno`, `codturma`, `curso_fk_id`, `media`, `data_matricula`, `resultado`, `created_at`, `update_at`) VALUES
+(1, 1, 1, 2, '7.5', '09-12-2019', 'aprovado', '2019-12-10 15:16:08', '2019-12-10 15:16:08'),
+(2, 2, 2, 3, '7.5', '', '', '2019-12-10 15:59:46', '2019-12-10 15:59:46');
 
 -- --------------------------------------------------------
 
@@ -186,18 +202,15 @@ CREATE TABLE IF NOT EXISTS `matricula` (
 -- Estrutura da tabela `professores`
 --
 
-DROP TABLE IF EXISTS `professores`;
-CREATE TABLE IF NOT EXISTS `professores` (
-  `prof_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `professores` (
+  `prof_id` int(11) NOT NULL,
   `prof_cpf` varchar(25) NOT NULL,
   `prof_nome` varchar(255) NOT NULL,
   `prof_senha` varchar(255) NOT NULL,
   `prof_status` enum('ATIVO','INATIVO') NOT NULL,
   `prof_nivel` enum('ADMINISTRADOR','PROFESSOR') NOT NULL,
-  `somente_leitura` enum('sim','nao') NOT NULL DEFAULT 'nao',
-  PRIMARY KEY (`prof_id`),
-  UNIQUE KEY `prof_cpf` (`prof_cpf`)
-) ENGINE=MyISAM AUTO_INCREMENT=166 DEFAULT CHARSET=latin1;
+  `somente_leitura` enum('sim','nao') NOT NULL DEFAULT 'nao'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `professores`
@@ -300,14 +313,11 @@ INSERT INTO `professores` (`prof_id`, `prof_cpf`, `prof_nome`, `prof_senha`, `pr
 -- Estrutura da tabela `professor_disciplina`
 --
 
-DROP TABLE IF EXISTS `professor_disciplina`;
-CREATE TABLE IF NOT EXISTS `professor_disciplina` (
-  `discpro_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `professor_disciplina` (
+  `discpro_id` bigint(20) UNSIGNED NOT NULL,
   `discpro_professor_id` bigint(20) NOT NULL,
-  `discpro_disciplina_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`discpro_id`),
-  KEY `index_fk` (`discpro_professor_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  `discpro_disciplina_id` bigint(20) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `professor_disciplina`
@@ -318,7 +328,10 @@ INSERT INTO `professor_disciplina` (`discpro_id`, `discpro_professor_id`, `discp
 (3, 78, 2),
 (4, 77, 1),
 (5, 77, 2),
-(6, 77, 6);
+(6, 77, 6),
+(7, 75, 1),
+(8, 75, 2),
+(9, 75, 4);
 
 -- --------------------------------------------------------
 
@@ -326,25 +339,130 @@ INSERT INTO `professor_disciplina` (`discpro_id`, `discpro_professor_id`, `discp
 -- Estrutura da tabela `turma`
 --
 
-DROP TABLE IF EXISTS `turma`;
-CREATE TABLE IF NOT EXISTS `turma` (
-  `codturma` int(11) NOT NULL AUTO_INCREMENT,
-  `periodoletivo` varchar(45) DEFAULT NULL,
+CREATE TABLE `turma` (
+  `codturma` int(11) NOT NULL,
   `sala` varchar(45) DEFAULT NULL,
+  `capacidade` int(11) NOT NULL,
+  `turno` varchar(30) NOT NULL,
+  `bloco` varchar(15) NOT NULL,
+  `periodoletivo` varchar(45) DEFAULT NULL,
   `codprof` int(11) DEFAULT NULL,
   `coddisc` int(11) DEFAULT NULL,
-  PRIMARY KEY (`codturma`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `turma`
 --
 
-INSERT INTO `turma` (`codturma`, `periodoletivo`, `sala`, `codprof`, `coddisc`) VALUES
-(1, '2019', '1', 1, 1),
-(2, '2019', '2', 1, 2);
-COMMIT;
+INSERT INTO `turma` (`codturma`, `sala`, `capacidade`, `turno`, `bloco`, `periodoletivo`, `codprof`, `coddisc`, `created_at`, `update_at`) VALUES
+(1, '1', 40, 'Noturno', 'A', '2019', NULL, NULL, '2019-12-10 12:52:31', '2019-12-10 14:02:34'),
+(2, '1', 40, 'Diurno', 'B', '2019', NULL, NULL, '2019-12-10 12:52:55', '2019-12-10 14:02:36'),
+(3, '2', 30, '', 'C', '', NULL, NULL, '2019-12-10 13:01:28', '2019-12-10 14:04:31'),
+(4, '3', 25, '', 'D', '', NULL, NULL, '2019-12-10 13:01:30', '2019-12-10 14:04:35');
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `aluno`
+--
+ALTER TABLE `aluno`
+  ADD PRIMARY KEY (`codaluno`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `cpf` (`cpf`);
+
+--
+-- Indexes for table `aluno_disciplina`
+--
+ALTER TABLE `aluno_disciplina`
+  ADD PRIMARY KEY (`alu_disc_id`);
+
+--
+-- Indexes for table `curso`
+--
+ALTER TABLE `curso`
+  ADD PRIMARY KEY (`codcurso`),
+  ADD UNIQUE KEY `nomecurso` (`nomecurso`);
+
+--
+-- Indexes for table `disciplina`
+--
+ALTER TABLE `disciplina`
+  ADD PRIMARY KEY (`coddisc`);
+
+--
+-- Indexes for table `matricula`
+--
+ALTER TABLE `matricula`
+  ADD PRIMARY KEY (`matricula_id`);
+
+--
+-- Indexes for table `professores`
+--
+ALTER TABLE `professores`
+  ADD PRIMARY KEY (`prof_id`),
+  ADD UNIQUE KEY `prof_cpf` (`prof_cpf`);
+
+--
+-- Indexes for table `professor_disciplina`
+--
+ALTER TABLE `professor_disciplina`
+  ADD PRIMARY KEY (`discpro_id`),
+  ADD KEY `index_fk` (`discpro_professor_id`);
+
+--
+-- Indexes for table `turma`
+--
+ALTER TABLE `turma`
+  ADD PRIMARY KEY (`codturma`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `aluno`
+--
+ALTER TABLE `aluno`
+  MODIFY `codaluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `aluno_disciplina`
+--
+ALTER TABLE `aluno_disciplina`
+  MODIFY `alu_disc_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `curso`
+--
+ALTER TABLE `curso`
+  MODIFY `codcurso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `disciplina`
+--
+ALTER TABLE `disciplina`
+  MODIFY `coddisc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+--
+-- AUTO_INCREMENT for table `matricula`
+--
+ALTER TABLE `matricula`
+  MODIFY `matricula_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `professores`
+--
+ALTER TABLE `professores`
+  MODIFY `prof_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
+--
+-- AUTO_INCREMENT for table `professor_disciplina`
+--
+ALTER TABLE `professor_disciplina`
+  MODIFY `discpro_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `turma`
+--
+ALTER TABLE `turma`
+  MODIFY `codturma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
