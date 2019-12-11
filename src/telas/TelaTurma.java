@@ -9,6 +9,7 @@ import controllers.TurmaController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import modelos.Turma;
 
 /**
@@ -18,35 +19,39 @@ import modelos.Turma;
 public class TelaTurma extends javax.swing.JDialog {
 
     /**
-     * Creates new form TelaTurma
+     *
+     * @param parent
+     * @param modal
      */
     public TelaTurma(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         preencherDadosNaTabela();
     }
-    
+
     final void preencherDadosNaTabela() {
-        
-        String[] columnNames = {"ID", "PERÍODO LETIVO", "SALA", "PROFESSOR", "DISCIPLINA"};
-        
+
+        String[] columnNames = {"ID", "SALA", "CAPACIDADE", "TURNO", "BLOCO", "PERÍODO LETIVO","ANO LETIVO"};
+
         try {
-            
+
             Turma turmas[] = TurmaController.listarTudo();
-            
-            Object[][] data = new Object[turmas.length][5]; //O 2, aqui, é a quantidade de colunas
+
+            Object[][] data = new Object[turmas.length][7]; //O 2, aqui, é a quantidade de colunas
 
             int index = 0;
-            
-            for (Turma s : turmas) {
-                data[index][0] = s.getCodigoTurma(); //
-                data[index][1] = s.getCodigoDisciplina(); //
-                data[index][2] = s.getCodigoDisciplina(); //
-                data[index][3] = s.getCodigoDisciplina(); //
-                data[index][4] = s.getCodigoDisciplina(); //
+
+            for (Turma turm : turmas) {
+                data[index][0] = turm.getTurmaID(); //
+                data[index][1] = turm.getSala(); //
+                data[index][2] = turm.getCapacidade(); //
+                data[index][3] = turm.getTurno().toUpperCase(); //
+                data[index][4] = turm.getBloco(); //
+                data[index][5] = turm.getPeriodLetivo(); //
+                data[index][6] = turm.getAnoLetivo(); //
                 index++;
             }
-            
+
             DefaultTableModel modelo = new DefaultTableModel(data, columnNames) {
                 //método que impede o modo de edição na Tabela....
                 @Override
@@ -54,7 +59,7 @@ public class TelaTurma extends javax.swing.JDialog {
                     return colunas == -1;
                 }
             };
-            
+
             jTableTurma.setModel(modelo);
 
             //Limpa os campos abaixo com ID e NOME do curso
@@ -63,7 +68,7 @@ public class TelaTurma extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(TelaCursos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**
@@ -82,6 +87,13 @@ public class TelaTurma extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Módulo: Turma");
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         jTableTurma.setAutoCreateRowSorter(true);
         jTableTurma.setModel(new javax.swing.table.DefaultTableModel(
@@ -89,14 +101,14 @@ public class TelaTurma extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "PERÍODO LETIVO", "SALA", "PROFESSOR", "DISCIPLINA"
+                "ID", "SALA", "PERÍODO LETIVO", "CAPACIDADE", "BLOCO", "TURNO", "ANO LETIVO"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, true, true
+                false, true, false, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -120,7 +132,7 @@ public class TelaTurma extends javax.swing.JDialog {
         if (jTableTurma.getColumnModel().getColumnCount() > 0) {
             jTableTurma.getColumnModel().getColumn(0).setMinWidth(40);
             jTableTurma.getColumnModel().getColumn(0).setMaxWidth(40);
-            jTableTurma.getColumnModel().getColumn(1).setMinWidth(100);
+            jTableTurma.getColumnModel().getColumn(2).setMinWidth(100);
         }
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastrar Novo Aluno", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
@@ -192,18 +204,18 @@ public class TelaTurma extends javax.swing.JDialog {
 
     private void jTableTurmaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTurmaMouseClicked
         //Pega o  index da Tabela ao clicar sobre ela:
-//        int rowIndex = jTableAluno.convertRowIndexToModel(jTableAluno.getSelectedRow());
-//        //Pega o modelo da tabela
-//        TableModel model = jTableAluno.getModel();
-//        //Pega o Id da linha selecionada:
-//        int id = Integer.parseInt(model.getValueAt(rowIndex, 0).toString());
-//        //Pega o nome da linha selecionada:
-//        String nome = model.getValueAt(rowIndex, 1).toString();
-//
-//        jLabel2.setText(String.valueOf(id));
-//        jLabel4.setText(nome);
-//        jButton2.setEnabled(true);
-//        jButton3.setEnabled(true);
+
+        int rowIndex = jTableTurma.convertRowIndexToModel(jTableTurma.getSelectedRow());
+        //Pega o modelo da tabela
+        TableModel model = jTableTurma.getModel();
+        //Pega o Id da linha selecionada:
+        int id = Integer.parseInt(model.getValueAt(rowIndex, 0).toString());
+
+        if (evt.getClickCount() > 1) {
+            new cadastros.Turma(null, true, id
+            ).setVisible(true);
+        }
+
     }//GEN-LAST:event_jTableTurmaMouseClicked
 
     private void jTableTurmaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTurmaMouseEntered
@@ -224,8 +236,14 @@ public class TelaTurma extends javax.swing.JDialog {
 //        } else {
 //            JOptionPane.showMessageDialog(null, "Nome do aluno inválido ou em branco.");
 //        }
-        new cadastros.Turma(null, rootPaneCheckingEnabled).setVisible(true);
+
+        new cadastros.Turma(null, true, 0).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        // TODO add your handling code here:
+        preencherDadosNaTabela();
+    }//GEN-LAST:event_formWindowGainedFocus
 
     /**
      * @param args the command line arguments

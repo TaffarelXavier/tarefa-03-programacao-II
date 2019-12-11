@@ -743,7 +743,7 @@ public class TelaAlunoIncluirEditar extends javax.swing.JDialog {
 
             for (Turma turma : turmas) {
                 String textoDisplay = turma.getCodigoSala() + "- Bloco " + turma.getBloco();
-                modelTurma.addElement(new ComboItem(turma.getCodigoTurma(), textoDisplay));
+                modelTurma.addElement(new ComboItem(turma.getTurmaID(), textoDisplay));
             }
 
             jComboBoxTurma.setModel(new javax.swing.DefaultComboBoxModel<>(modelTurma));

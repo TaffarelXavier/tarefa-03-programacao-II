@@ -6,28 +6,33 @@ package modelos;
  */
 public class Turma {
 
-    private int codigoTurma;
+    private int turmaID;
     private String periodLetivo;
     private String codigoSala;
     private String bloco;
-    private int codigoProfessor;
-    private int codigoDisciplina;
+    private String sala;
+    private int capacidade;
+    private String turno;
+    private int anoLetivo;
 
-    public Turma(int codigoTurma, String periodLetivo, String codigoSala, String bloco, int codigoProfessor, int codigoDisciplina) {
-        this.codigoTurma = codigoTurma;
+    public Turma(int codigoTurma, String periodLetivo, String codigoSala, String bloco,String sala, int capacidade,
+            String turno, int anoLetivo) {
+        this.turmaID = codigoTurma;
         this.periodLetivo = periodLetivo;
         this.codigoSala = codigoSala;
         this.bloco = bloco;
-        this.codigoProfessor = codigoProfessor;
-        this.codigoDisciplina = codigoDisciplina;
-    }
-    
-    public int getCodigoTurma() {
-        return codigoTurma;
+        this.sala = sala;
+        this.capacidade = capacidade;
+        this.turno = turno;
+        this.anoLetivo = anoLetivo;
     }
 
-    public void setCodigoTurma(int codigoTurma) {
-        this.codigoTurma = codigoTurma;
+    public int getTurmaID() {
+        return turmaID;
+    }
+
+    public void setTurmaID(int turmaID) {
+        this.turmaID = turmaID;
     }
 
     public String getPeriodLetivo() {
@@ -46,28 +51,44 @@ public class Turma {
         this.codigoSala = codigoSala;
     }
 
-    public int getCodigoProfessor() {
-        return codigoProfessor;
-    }
-
-    public void setCodigoProfessor(int codigoProfessor) {
-        this.codigoProfessor = codigoProfessor;
-    }
-
-    public int getCodigoDisciplina() {
-        return codigoDisciplina;
-    }
-
-    public void setCodigoDisciplina(int codigoDisciplina) {
-        this.codigoDisciplina = codigoDisciplina;
-    }
-
     public String getBloco() {
         return bloco;
     }
 
     public void setBloco(String bloco) {
         this.bloco = bloco;
+    }
+
+    public String getSala() {
+        return sala;
+    }
+
+    public void setSala(String sala) {
+        this.sala = sala;
+    }
+
+    public int getCapacidade() {
+        return capacidade;
+    }
+
+    public void setCapacidade(int capacidade) {
+        this.capacidade = capacidade;
+    }
+
+    public String getTurno() {
+        return turno;
+    }
+
+    public void setTurno(String turno) {
+        this.turno = turno;
+    }
+
+    public int getAnoLetivo() {
+        return anoLetivo;
+    }
+
+    public void setAnoLetivo(int anoLetivo) {
+        this.anoLetivo = anoLetivo;
     }
 
 }
