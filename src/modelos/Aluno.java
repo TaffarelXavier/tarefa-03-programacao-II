@@ -18,6 +18,8 @@ public class Aluno {
     private String email;
     private String telefone;
 
+    private Disciplina disciplina;
+    
     /**
      * 
      * @param nomeALuno
@@ -35,6 +37,8 @@ public class Aluno {
         this.email = email;
         this.telefone = telefone;
     }
+    
+    
 
     public String getNome() {
         return nome;
@@ -83,7 +87,14 @@ public class Aluno {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-    
+
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
+    }
     
 
 }

@@ -12,7 +12,7 @@ package modelos;
 public class Disciplina {
 
     private int codigoDisciplina;
-    private String nomeDisciplina;
+    private String titulo;
     private String creditos;
 
     /**
@@ -23,7 +23,7 @@ public class Disciplina {
      */
     public Disciplina(int codigoDisciplina, String nomeDisciplina, String creditos) {
         this.codigoDisciplina = codigoDisciplina;
-        this.nomeDisciplina = nomeDisciplina;
+        this.titulo = nomeDisciplina;
         this.creditos = creditos;
     }
 
@@ -35,12 +35,12 @@ public class Disciplina {
         this.codigoDisciplina = codigoDisciplina;
     }
 
-    public String getNomeDisciplina() {
-        return nomeDisciplina;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setNomeDisciplina(String nomeDisciplina) {
-        this.nomeDisciplina = nomeDisciplina;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getCreditos() {

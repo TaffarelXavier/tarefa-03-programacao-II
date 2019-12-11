@@ -7,8 +7,14 @@ package controllers;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import modelos.Aluno;
+import modelos.AlunoDisciplina;
+import modelos.AlunoMatricula;
+import modelos.Disciplina;
 import servicos.Conexao;
+import static servicos.Funcoes.getTotalDeRegistros;
 
 /**
  *
@@ -17,15 +23,15 @@ import servicos.Conexao;
 public class AlunoDisciplinaController {
 
     /**
-     * 
+     *
      * @param alunoFkId
      * @param disciplinaFkId
      * @param matriculaFkId
-     * @return 
+     * @return
      */
     public static int incluir(int alunoFkId, int disciplinaFkId, int matriculaFkId) {
         try {
-            
+
             String sql = "INSERT INTO aluno_disciplina (aluno_fk_id, disciplina_fk_id, matricula_fk_id) VALUES (?,?,?);";
             PreparedStatement preparedStatement = Conexao.conectar().prepareStatement(sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -38,6 +44,42 @@ public class AlunoDisciplinaController {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Atenção: erro!", 1);
         }
         return 0;
+    }
+
+    public static AlunoDisciplina[] getDisciplinaPorMatriculaID(int matriculaId) throws Exception {
+
+        PreparedStatement preparedStatement;
+
+        try {
+
+            preparedStatement = Conexao.conectar().prepareStatement("SELECT * FROM aluno_disciplina AS t1\n"
+                    + "JOIN disciplina AS t2 ON t1.disciplina_fk_id = t2.coddisc WHERE matricula_fk_id = ?");
+
+            preparedStatement.setInt(1, matriculaId);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (!rs.next()) {
+                System.out.println("Nenhum registro encontrado para este aluno.");
+            } else {
+
+                AlunoDisciplina[] aluno_disciplina = new AlunoDisciplina[getTotalDeRegistros(rs)];
+
+                int i = 0;
+
+                while (rs.next()) {
+
+                    aluno_disciplina[i] = new AlunoDisciplina(rs.getInt("coddisc"), rs.getString("titulo"));
+                    ++i;
+                }
+
+                return aluno_disciplina;
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return null;
     }
 
 }

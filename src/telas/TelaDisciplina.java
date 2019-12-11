@@ -39,7 +39,7 @@ public class TelaDisciplina extends javax.swing.JDialog {
 
             for (Disciplina s : cursos) {
                 data[index][0] = s.getCodigoDisciplina(); //
-                data[index][1] = s.getNomeDisciplina(); //
+                data[index][1] = s.getTitulo(); //
                 data[index][2] = s.getCreditos(); //
                 index++;
             }

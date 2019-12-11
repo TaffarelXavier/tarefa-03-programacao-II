@@ -5,6 +5,7 @@
  */
 package telas;
 
+import cadastros.TelaAlunoIncluirEditar;
 import java.awt.Color;
 
 /**
@@ -39,6 +40,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jbMatricula2 = new javax.swing.JButton();
         jbMatricula3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
@@ -187,6 +189,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel1.setAlignmentY(0.0F);
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 153, 102));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("SME - SISTEMA MODULAR ESCOLAR");
+
         jMenu1.setText("Sistema");
 
         jMenu5.setText("Transações");
@@ -255,8 +262,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -264,9 +272,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jLabel1)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -294,7 +303,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jbAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlunoActionPerformed
         // TODO add your handling code here:
-        new TelaAlunoIncluirEditar(null, rootPaneCheckingEnabled).setVisible(true);
+        new TelaAlunoIncluirEditar(null, rootPaneCheckingEnabled, "incluir").setVisible(true);
     }//GEN-LAST:event_jbAlunoActionPerformed
 
     private void jbMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMatriculaActionPerformed
@@ -314,7 +323,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jbMatricula3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMatricula3ActionPerformed
         // TODO add your handling code here:
-         abrirTela(new TelaProfessor(this, rootPaneCheckingEnabled));
+        abrirTela(new TelaProfessor(this, rootPaneCheckingEnabled));
     }//GEN-LAST:event_jbMatricula3ActionPerformed
 
     /**
@@ -383,6 +392,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

@@ -5,6 +5,7 @@
  */
 package telas;
 
+import cadastros.TelaAlunoIncluirEditar;
 import classesestaticas.AlunoStatico;
 import controllers.AlunoController;
 import java.util.logging.Level;
@@ -48,6 +49,13 @@ public class TelaAlunoGerenciar extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Módulo: Alunos");
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         jTableAluno.setAutoCreateRowSorter(true);
         jTableAluno.setModel(new javax.swing.table.DefaultTableModel(
@@ -192,7 +200,7 @@ public class TelaAlunoGerenciar extends javax.swing.JDialog {
         AlunoStatico.setDataDeNascimento(dataNascimento);
         
         if (evt.getClickCount() > 1) {
-            new TelaAlunoIncluirEditar(null, true).setVisible(true);
+            new TelaAlunoIncluirEditar(null, true,"editar").setVisible(true);
         }
 
     }//GEN-LAST:event_jTableAlunoMouseClicked
@@ -240,7 +248,7 @@ public class TelaAlunoGerenciar extends javax.swing.JDialog {
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new TelaAlunoIncluirEditar(null, rootPaneCheckingEnabled).setVisible(true);
+        new TelaAlunoIncluirEditar(null, rootPaneCheckingEnabled,"incluir").setVisible(true);
 //        String nomeDoAluno = jtCursoNome.getText().trim();
 //        if (nomeDoAluno.length() > 0) {
 //           /*if (AlunoController.incluir(nomeDoAluno) > 0) {
@@ -254,6 +262,12 @@ public class TelaAlunoGerenciar extends javax.swing.JDialog {
 //            JOptionPane.showMessageDialog(null, "Nome do aluno inválido ou em branco.");
 //        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        // TODO add your handling code here:
+        
+        preencherDadosNaTabela();
+    }//GEN-LAST:event_formWindowGainedFocus
 
     /**
      * @param args the command line arguments

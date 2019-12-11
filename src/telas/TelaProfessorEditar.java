@@ -100,7 +100,7 @@ public class TelaProfessorEditar extends javax.swing.JDialog {
             Vector model = new Vector();
 
             for (Disciplina disciplina : disciplinas) {
-                model.addElement(new ComboItem(disciplina.getCodigoDisciplina(), disciplina.getNomeDisciplina()));
+                model.addElement(new ComboItem(disciplina.getCodigoDisciplina(), disciplina.getTitulo()));
             }
 
             jComboBoxDisciplina.setModel(new javax.swing.DefaultComboBoxModel<>(model));
