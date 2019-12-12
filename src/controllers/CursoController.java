@@ -26,7 +26,7 @@ public class CursoController extends Funcoes{
      * @param tituloCurso
      * @return
      */
-    public static int incluirCurso(String tituloCurso) {
+    public static int incluir(String tituloCurso) {
         try {
             String sql = "INSERT INTO curso (nomecurso) VALUES (?);";
             PreparedStatement preparedStatement = Conexao.conectar().prepareStatement(sql,
