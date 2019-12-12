@@ -5,6 +5,7 @@
  */
 package telas;
 
+import cadastros.CadastroDisciplina;
 import controllers.DisciplinaController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,6 +82,13 @@ public class TelaDisciplina extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Módulo: Disciplina");
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Disciplina", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
 
@@ -126,6 +134,11 @@ public class TelaDisciplina extends javax.swing.JDialog {
                 "ID", "TÍTULO", "CRÉDITOS"
             }
         ));
+        jTableDisciplina.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDisciplinaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableDisciplina);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,7 +168,31 @@ public class TelaDisciplina extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        new CadastroDisciplina(null, true, null).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTableDisciplinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDisciplinaMouseClicked
+        // TODO add your handling code here:
+        //Pega o  index da Tabela ao clicar sobre ela:
+        int rowIndex = jTableDisciplina.convertRowIndexToModel(jTableDisciplina.getSelectedRow());
+//Pega o modelo da tabela
+        TableModel model = jTableDisciplina.getModel();
+//Pega o Id da linha selecionada, na coluna 1, (1-1=0):
+        int id = Integer.parseInt(model.getValueAt(rowIndex, 0).toString());
+
+        String titulo = model.getValueAt(rowIndex, 1).toString();
+
+        if (evt.getClickCount() > 1) {
+
+            new CadastroDisciplina(null, true,
+                    new Object[]{id, titulo}).setVisible(true);
+        }
+    }//GEN-LAST:event_jTableDisciplinaMouseClicked
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        // TODO add your handling code here:
+        preencherDadosNaTabela();
+    }//GEN-LAST:event_formWindowGainedFocus
 
     /**
      * @param args the command line arguments

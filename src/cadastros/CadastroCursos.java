@@ -18,25 +18,26 @@ public class CadastroCursos extends javax.swing.JDialog {
     private int cursoId;
 
     /**
-     *
+     * 
      * @param parent
      * @param modal
-     * @param titulo
+     * @param acao 
      */
-    public CadastroCursos(java.awt.Frame parent, boolean modal, String titulo) {
+    public CadastroCursos(java.awt.Frame parent, boolean modal, String acao) {
         super(parent, modal);
         initComponents();
 
-        if (titulo.equals("editar")) {
+        if (acao.equals("editar")) {
             jLabelInfo.setText("EDITAR CURSO");
+            cursoId = EstaticaCurso.getId(); //Atribuição do Id ao cursoId
+            jTextFieldCursoNome.setText(EstaticaCurso.getNome());
+            jLabelCursoId.setText(String.valueOf(cursoId));
         } else {
             jLabelInfo.setText("INCLUIR NOVO CURSO");
             jLabel1.setVisible(false);
             jLabelCursoId.setVisible(false);
+            jTextFieldCursoNome.setText("");
         }
-        cursoId = EstaticaCurso.getId();
-        jTextFieldCursoNome.setText(EstaticaCurso.getNome());
-        jLabelCursoId.setText(String.valueOf(cursoId));
     }
 
     /**

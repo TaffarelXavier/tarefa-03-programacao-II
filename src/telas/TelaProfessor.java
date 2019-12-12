@@ -230,7 +230,7 @@ public class TelaProfessor extends javax.swing.JDialog {
             jTableProfessor.getColumnModel().getColumn(2).setPreferredWidth(100);
         }
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastrar Novo Aluno", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listagem de Professores", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
 
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton4.setText("Novo Professor");

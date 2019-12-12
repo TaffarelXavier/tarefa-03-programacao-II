@@ -5,17 +5,37 @@
  */
 package cadastros;
 
+import controllers.DisciplinaController;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Taffrel Xavier <taffarel_deus@hotmail.com>
  */
-public class CadastroDisciplina extends javax.swing.JFrame {
+public class CadastroDisciplina extends javax.swing.JDialog {
+
+    boolean isEditando = false;
 
     /**
-     * Creates new form CadastroDisciplina
+     *
+     * @param parent
+     * @param modal
+     * @param disciplina
      */
-    public CadastroDisciplina() {
+    public CadastroDisciplina(java.awt.Frame parent, boolean modal, Object[] disciplina) {
+        super(parent, modal);
         initComponents();
+        if (disciplina != null) { //Editando...
+            jTextFieldId.setText(disciplina[0].toString());
+            jTextFieldDisciplina.setText(disciplina[1].toString());
+            isEditando = true;
+            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "VOCÊ ESTÁ EDITANDO UMA DISCIPLINA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
+        } else { //Inclusão
+            jLabelDisc_Id.setVisible(false);
+            jTextFieldId.setVisible(false);
+            isEditando = false;
+            jButtonExcluirDisciplina.setVisible(false);
+        }
     }
 
     /**
@@ -25,18 +45,74 @@ public class CadastroDisciplina extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabelDisciplina = new javax.swing.JLabel();
-        jTextFieldDisciplina = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jButtonExcluirDisciplina = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabelDisc_Id = new javax.swing.JLabel();
+        jTextFieldId = new javax.swing.JTextField();
+        jTextFieldDisciplina = new javax.swing.JTextField();
+        jLabelDisciplina1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton2.setText("SALVAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "AÇÕES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton1.setText("SALVAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButtonExcluirDisciplina.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonExcluirDisciplina.setText("EXCLUIR");
+        jButtonExcluirDisciplina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirDisciplinaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(227, Short.MAX_VALUE)
+                .addComponent(jButtonExcluirDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonExcluirDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10))
+        );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CRIAR DISCIPLINA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
 
-        jLabelDisciplina.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabelDisciplina.setText("Nome:");
+        jLabelDisc_Id.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelDisc_Id.setText("ID");
+
+        jTextFieldId.setEnabled(false);
+
+        jLabelDisciplina1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelDisciplina1.setText("NOME:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -45,42 +121,27 @@ public class CadastroDisciplina extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldDisciplina)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelDisciplina)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextFieldDisciplina))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelDisc_Id)
+                            .addComponent(jLabelDisciplina1)
+                            .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelDisciplina)
+                .addComponent(jLabelDisc_Id)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelDisciplina1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextFieldDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(154, Short.MAX_VALUE))
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "AÇÕES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
-
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("SALVAR");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(353, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -98,15 +159,60 @@ public class CadastroDisciplina extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String disciplina = jTextFieldDisciplina.getText();
+        if (disciplina.trim().length() > 0) {
+            if (isEditando == true) { //Edição
+                int disciplinaID = Integer.parseInt(jTextFieldId.getText());
+                if (DisciplinaController.atualizar(disciplina, "", disciplinaID) > 0) {
+                    JOptionPane.showMessageDialog(null, "Dados alterados com suceso!", "Sucesso!", 1);
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Houve um erro ao tentar fazer a atualização. "
+                            + "Tente novamente.",
+                            "Atenção", 0);
+                }
+            } else {
+                //Inclusão:
+                if (DisciplinaController.incluir(disciplina, "") > 0) {
+                    JOptionPane.showMessageDialog(null, "Disciplina cadastrada com suceso!", "Sucesso!", 1);
+                   jTextFieldDisciplina.setText(""); 
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "O nome da disciplina está vazio.", "Atenção", 1);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButtonExcluirDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirDisciplinaActionPerformed
+
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir esta disciplina?", "Cuidado!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            // Saving code here
+            int disciplinaID = Integer.parseInt(jTextFieldId.getText());
+            if (DisciplinaController.excluir(disciplinaID) > 0) {
+                JOptionPane.showMessageDialog(null, "Disciplina excluída com sucesso!",
+                        "Sucesso!", 1);
+                this.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_jButtonExcluirDisciplinaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,20 +240,32 @@ public class CadastroDisciplina extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(CadastroDisciplina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastroDisciplina().setVisible(true);
+                CadastroDisciplina dialog = new CadastroDisciplina(new javax.swing.JFrame(), true, null);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabelDisciplina;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonExcluirDisciplina;
+    private javax.swing.JLabel jLabelDisc_Id;
+    private javax.swing.JLabel jLabelDisciplina1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextFieldDisciplina;
+    private javax.swing.JTextField jTextFieldId;
     // End of variables declaration//GEN-END:variables
 }

@@ -70,26 +70,21 @@ public class DisciplinaController {
      */
     public static int excluir(int disciplinaId) {
         try {
-            Object[] options = {"Yes", "No"};
-            int n = JOptionPane.showOptionDialog(null,
-                    "Do you like to delete the record for Student ID:  ?",
-                    "Exit Confirmation", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options);
-            if (n == JOptionPane.YES_OPTION) {
-                String sql = "DELETE FROM disciplina WHERE coddisc =?";
-                PreparedStatement prest;
-                try {
-                    prest = Conexao.conectar().prepareStatement(sql);
-                    prest.setInt(1, disciplinaId);
-                    prest.executeUpdate();
-                    Conexao.conectar().commit();
-                    JOptionPane.showMessageDialog(null, "The record has been deleted successfully.");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "The record has been deleted successfully.");
+            String sql = "DELETE FROM disciplina WHERE coddisc =?";
+            PreparedStatement prest;
+            try {
+                prest = Conexao.conectar().prepareStatement(sql);
+                prest.setInt(1, disciplinaId);
+                int result = prest.executeUpdate();
+//                Conexao.conectar().commit();
+                if (result > 0) {
+                    JOptionPane.showMessageDialog(null, "Registro excluído com sucesso!");
                 }
-
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível executar a operação.");
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(null, "The record has been deleted successfully.");
+            JOptionPane.showMessageDialog(null, "Não foi possível executar a operação.");
         }
         return 0;
     }

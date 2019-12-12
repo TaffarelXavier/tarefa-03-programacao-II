@@ -89,7 +89,7 @@ public class TelaCursos extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jtCursoNome = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
+        jButtonExcluir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -203,14 +203,14 @@ public class TelaCursos extends javax.swing.JDialog {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções de Curso:"));
 
-        jButton3.setBackground(new java.awt.Color(255, 51, 0));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Excluir");
-        jButton3.setEnabled(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExcluir.setBackground(new java.awt.Color(255, 51, 0));
+        jButtonExcluir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonExcluir.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonExcluir.setText("Excluir");
+        jButtonExcluir.setEnabled(false);
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonExcluirActionPerformed(evt);
             }
         });
 
@@ -242,13 +242,13 @@ public class TelaCursos extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -323,15 +323,15 @@ public class TelaCursos extends javax.swing.JDialog {
         //Pega o nome da linha selecionada:
         String nome = model.getValueAt(rowIndex, 1).toString();
 
-        if (evt.getClickCount() > 1) {
+        if (evt.getClickCount() > 1) { ///Duplo clique
             EstaticaCurso.setId(id);
             EstaticaCurso.setNome(nome);
-            new CadastroCursos(null, true,"editar").setVisible(true);
+            new CadastroCursos(null, true, "editar").setVisible(true);
         }
 
         jLabel2.setText(String.valueOf(id));
         jLabel4.setText(nome);
-        jButton3.setEnabled(true);
+        jButtonExcluir.setEnabled(true);
 
     }//GEN-LAST:event_jTableCursosMouseClicked
 
@@ -340,7 +340,7 @@ public class TelaCursos extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jTableCursosMouseEntered
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         // TODO add your handling code here:
         String cursoNome = jLabel4.getText();
         int cursoCodigo = Integer.parseInt(jLabel2.getText());
@@ -358,7 +358,7 @@ public class TelaCursos extends javax.swing.JDialog {
                 }
             }
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
         // TODO add your handling code here:
@@ -367,6 +367,7 @@ public class TelaCursos extends javax.swing.JDialog {
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
         // TODO add your handling code here:
         preencherDadosNaTabela();
+        jButtonExcluir.setEnabled(false);
     }//GEN-LAST:event_formWindowGainedFocus
 
     /**
@@ -412,7 +413,7 @@ public class TelaCursos extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonExcluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
