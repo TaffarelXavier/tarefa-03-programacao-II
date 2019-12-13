@@ -199,4 +199,60 @@ public class TurmaController extends Funcoes {
         }
         return null;
     }
+
+    public static Turma[] filtrarTurma(String filtro, String filtroTipo) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            String sql;
+
+            ResultSet rs = null;
+
+            if (filtroTipo.toLowerCase().equals("SALA".toLowerCase()) || filtroTipo.toLowerCase().equals("BLOCO".toLowerCase())) {
+                sql = "SELECT * FROM turma WHERE sala LIKE ? || bloco LIKE ?;";
+                preparedStatement = Conexao.conectar().prepareStatement(sql);
+                preparedStatement.setString(1, "%" + filtro + "%");
+                preparedStatement.setString(2, "%" + filtro + "%");
+            } else if (filtroTipo.toLowerCase().equals("ID".toLowerCase()) || filtroTipo.toLowerCase().equals("CAPACIDADE".toLowerCase())) {
+                sql = "SELECT * FROM turma WHERE ID = ? || CAPACIDADE = ?;";
+                preparedStatement = Conexao.conectar().prepareStatement(sql);
+                preparedStatement.setString(1, filtro);
+                preparedStatement.setString(2, filtro);
+
+            }
+            rs = preparedStatement.executeQuery();
+
+            if (!rs.next()) {
+                System.out.println("Nenhum registro encontrado.");
+            } else {
+
+                Turma[] turmas = new Turma[getTotalDeRegistros(rs)];
+
+                int i = 0;
+
+                //int codigoTurma, String periodLetivo, String codigoSala, String bloco, int codigoProfessor, int codigoDisciplina
+                while (rs.next()) {
+                    turmas[i] = new Turma(
+                            rs.getInt("codturma"),
+                            rs.getString("periodoletivo"),
+                            rs.getString("sala"),
+                            rs.getString("bloco"),
+                            rs.getString("sala"),
+                            rs.getInt("capacidade"),
+                            rs.getString("turno"),
+                            rs.getInt("ano_letivo")
+                    );
+                    ++i;
+                }
+                rs.close();
+
+                return turmas;
+            }
+
+        } catch (SQLException ex) {
+            //JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return null;
+    }
 }

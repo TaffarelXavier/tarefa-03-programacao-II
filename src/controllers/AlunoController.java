@@ -138,22 +138,25 @@ public class AlunoController extends Funcoes {
 
     public static Aluno[] filtrarDadosAluno(String filtro, String filtroTipo) throws Exception {
 
-        PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement = null;
 
         try {
-            String sql = "";
-
+            String sql;
+            
+            ResultSet rs = null;
+            
             if (filtroTipo.toLowerCase().equals("nome".toLowerCase())) {
                 sql = "SELECT * FROM aluno WHERE nomealuno LIKE ?;";
-            }
-            else if(filtroTipo.toLowerCase().equals("cpf".toLowerCase())){
+                preparedStatement = Conexao.conectar().prepareStatement(sql);
+                preparedStatement.setString(1, "%" + filtro + "%");
+            } else if (filtroTipo.toLowerCase().equals("cpf".toLowerCase())) {
                 sql = "SELECT * FROM aluno WHERE cpf = ?;";
-            }
-            System.out.println(sql);
-            preparedStatement = Conexao.conectar().prepareStatement(sql);
-            preparedStatement.setString(1, "%" + filtro + "%");
-            ResultSet rs = preparedStatement.executeQuery();
+                preparedStatement = Conexao.conectar().prepareStatement(sql);
+                preparedStatement.setString(1, filtro);
 
+            }
+            rs = preparedStatement.executeQuery();
+            
             if (!rs.next()) {
                 System.out.println("Nenhum registro encontrado para alunos.");
             } else {

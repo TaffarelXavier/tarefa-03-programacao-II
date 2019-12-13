@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import modelos.Disciplina;
 import modelos.Professor;
 import servicos.Conexao;
 import static servicos.Funcoes.getTotalDeRegistros;
@@ -21,12 +22,12 @@ import static servicos.Funcoes.getTotalDeRegistros;
 public class ProfessorController {
 
     /**
-     * 
+     *
      * @param cpf
      * @param nome
      * @param status
      * @param nivel
-     * @return 
+     * @return
      */
     public static int incluir(String cpf, String nome, String status, String nivel) {
         try {
@@ -140,4 +141,57 @@ public class ProfessorController {
         }
         return null;
     }
+
+    public static Professor[] filtrarDisciplina(String filtro, String filtroTipo) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            String sql;
+
+            ResultSet rs = null;
+
+       
+            if (filtroTipo.toLowerCase().equals("NOME".toLowerCase()) || filtroTipo.toLowerCase().equals("STATUS".toLowerCase())) {
+                sql = "SELECT * FROM professores WHERE prof_nome LIKE ? || prof_status LIKE ?;";
+                preparedStatement = Conexao.conectar().prepareStatement(sql);
+                preparedStatement.setString(1, "%" + filtro + "%");
+                preparedStatement.setString(2, "%" + filtro + "%");
+            } else if (filtroTipo.toLowerCase().equals("ID".toLowerCase()) || filtroTipo.toLowerCase().equals("CPF".toLowerCase())) {
+                sql = "SELECT * FROM professores WHERE prof_id = ? || prof_cpf = ?;";
+                preparedStatement = Conexao.conectar().prepareStatement(sql);
+                preparedStatement.setString(1, filtro);
+                preparedStatement.setString(2, filtro);
+
+            }
+            rs = preparedStatement.executeQuery();
+
+            if (!rs.next()) {
+                System.out.println("Nenhum registro encontrado.");
+            } else {
+                Professor[] professores = new Professor[getTotalDeRegistros(rs)];
+
+                int i = 0;
+
+                while (rs.next()) {
+                    professores[i] = new Professor(
+                            rs.getInt("prof_id"),
+                            rs.getString("prof_cpf"),
+                            rs.getString("prof_nome"),
+                            rs.getString("prof_senha"),
+                            rs.getString("prof_status"),
+                            rs.getString("prof_nivel")
+                    );
+                    ++i;
+                }
+
+                return professores;
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return null;
+    }
+
 }

@@ -12,13 +12,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import modelos.Aluno;
 import modelos.Curso;
+import static servicos.Funcoes.getTotalDeRegistros;
 
 /**
  *
  * @author Taffarel Xavier <taffarel_deus@hotmail.com>
  */
-public class CursoController extends Funcoes{
+public class CursoController extends Funcoes {
 
     /**
      * Inclui um novo curso
@@ -60,10 +63,10 @@ public class CursoController extends Funcoes{
     }
 
     /**
-     * 
+     *
      * @param codigoCurso
      * @param nomeCurso
-     * @return 
+     * @return
      */
     public static int atualizarCurso(
             int codigoCurso,
@@ -103,6 +106,50 @@ public class CursoController extends Funcoes{
             stm = Conexao.conectar().prepareStatement("SELECT * FROM curso;");
 
             ResultSet rs = stm.executeQuery();
+
+            if (!rs.next()) {
+                System.out.println("Nenhum registro encontrado.");
+            } else {
+
+                Curso[] cursos = new Curso[getTotalDeRegistros(rs)];
+
+                int i = 0;
+
+                while (rs.next()) {
+                    cursos[i] = new Curso(rs.getString("nomecurso"), rs.getInt("codcurso"));
+                    ++i;
+                }
+
+                return cursos;
+            }
+
+        } catch (SQLException ex) {
+            //JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return null;
+    }
+
+    public static Curso[] filtrarcCurso(String filtro, String filtroTipo) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+
+            String sql;
+
+            ResultSet rs = null;
+
+            if (filtroTipo.toLowerCase().equals("nome".toLowerCase())) {
+                sql = "SELECT * FROM curso WHERE nomecurso LIKE ?;";
+                preparedStatement = Conexao.conectar().prepareStatement(sql);
+                preparedStatement.setString(1, "%" + filtro + "%");
+            } else if (filtroTipo.toLowerCase().equals("id".toLowerCase())) {
+                sql = "SELECT * FROM curso WHERE codcurso = ?;";
+                preparedStatement = Conexao.conectar().prepareStatement(sql);
+                preparedStatement.setString(1, filtro);
+
+            }
+            rs = preparedStatement.executeQuery();
 
             if (!rs.next()) {
                 System.out.println("Nenhum registro encontrado.");

@@ -89,6 +89,7 @@ public class Cons_Cursos extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jtCursoNome = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jComboBoxFiltroCurso = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jButtonExcluir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -172,28 +173,36 @@ public class Cons_Cursos extends javax.swing.JDialog {
             }
         });
 
+        jComboBoxFiltroCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "ID" }));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jtCursoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                .addComponent(jtCursoNome, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                .addComponent(jComboBoxFiltroCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtCursoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtCursoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jComboBoxFiltroCurso))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -385,6 +394,45 @@ public class Cons_Cursos extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        String[] columnNames = {"ID", "TÍTULO"};
+
+        try {
+            String filtro = jtCursoNome.getText();
+
+            String filtroTipo = jComboBoxFiltroCurso.getSelectedItem().toString().toLowerCase();
+
+            Curso cursos[] = CursoController.filtrarcCurso(filtro, filtroTipo);
+            
+            if (cursos != null) {
+                Object[][] data = new Object[cursos.length][2]; //O 2, aqui, é a quantidade de colunas
+
+                int index = 0;
+
+                for (Curso s : cursos) {
+                    data[index][0] = s.getId(); //
+                    data[index][1] = s.getNome(); //
+                    index++;
+                }
+
+                //jTable1.setModel(new DefaultTableModel(data, columnNames));
+                TableModel model = new DefaultTableModel(data, columnNames) {
+                    private static final long serialVersionUID = 1L;
+
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+
+                jTableCursos.setModel(model);
+
+                //Limpa os campos abaixo com ID e NOME do curso
+                jLabel4.setText("");
+                jLabel2.setText("");
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(Cons_Cursos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -434,6 +482,7 @@ public class Cons_Cursos extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JComboBox<String> jComboBoxFiltroCurso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

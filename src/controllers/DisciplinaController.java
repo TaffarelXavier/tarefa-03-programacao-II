@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import modelos.Curso;
 import modelos.Disciplina;
 import servicos.Conexao;
 import static servicos.Funcoes.getTotalDeRegistros;
@@ -120,4 +121,47 @@ public class DisciplinaController {
         }
         return null;
     }
+
+    public static Disciplina[] filtrarDisciplina(String filtro, String filtroTipo) throws Exception {
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            String sql;
+
+            ResultSet rs = null;
+            
+            if (filtroTipo.toLowerCase().equals("TÍTULO".toLowerCase())) {
+                sql = "SELECT * FROM disciplina WHERE titulo LIKE ?;";
+                preparedStatement = Conexao.conectar().prepareStatement(sql);
+                preparedStatement.setString(1, "%" + filtro + "%");
+            } else if (filtroTipo.toLowerCase().equals("ID".toLowerCase())) {
+                sql = "SELECT * FROM disciplina WHERE coddisc = ?;";
+                preparedStatement = Conexao.conectar().prepareStatement(sql);
+                preparedStatement.setString(1, filtro);
+
+            }
+            rs = preparedStatement.executeQuery();
+
+            if (!rs.next()) {
+                System.out.println("Nenhum registro encontrado.");
+            } else {
+                Disciplina[] disciplinas = new Disciplina[getTotalDeRegistros(rs)];
+
+                int i = 0;
+
+                while (rs.next()) {
+                    disciplinas[i] = new Disciplina(rs.getInt("coddisc"), rs.getString("titulo"), rs.getString("creditos"));
+                    ++i;
+                }
+
+                return disciplinas;
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return null;
+    }
+
 }

@@ -289,9 +289,9 @@ public class Cons_Aluno extends javax.swing.JDialog {
 
         try {
             String filtro = jtCursoNome.getText();
-            String filtroTipo = jComboBoxFiltro.getSelectedItem().toString();
-            System.out.println(filtro);
-            System.out.println(filtroTipo);
+            
+            String filtroTipo = jComboBoxFiltro.getSelectedItem().toString().toLowerCase();
+
             Aluno alunos[] = AlunoController.filtrarDadosAluno(filtro, filtroTipo);
 
             Object[][] data = new Object[alunos.length][4]; //O 2, aqui, é a quantidade de colunas
