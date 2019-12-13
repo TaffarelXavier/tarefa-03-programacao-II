@@ -14,9 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelos.Aluno;
 
-
 //Atualizar  a data da matrícula e o id do curso na tabela do aluno e salvar os ids das disciplinas em uma nova tabela.
-
 /**
  *
  * @author Taffrel Xavier <taffarel_deus@hotmail.com>
@@ -46,7 +44,9 @@ public class Cons_Aluno extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jtCursoNome = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jButtonPesquisarAluno = new javax.swing.JButton();
+        jComboBoxFiltro = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -114,13 +114,18 @@ public class Cons_Aluno extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Pesquisar aluno(s):");
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton2.setText("PESQUISAR");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPesquisarAluno.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButtonPesquisarAluno.setText("PESQUISAR");
+        jButtonPesquisarAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonPesquisarAlunoActionPerformed(evt);
             }
         });
+
+        jComboBoxFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "CPF", "ID", "Data de Nascimento" }));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("Filtro:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -129,27 +134,36 @@ public class Cons_Aluno extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jtCursoNome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 788, Short.MAX_VALUE)))
+                    .addComponent(jtCursoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBoxFiltro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonPesquisarAluno)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtCursoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBoxFiltro)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtCursoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonPesquisarAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -190,7 +204,7 @@ public class Cons_Aluno extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,19 +224,19 @@ public class Cons_Aluno extends javax.swing.JDialog {
         int id = Integer.parseInt(model.getValueAt(rowIndex, 0).toString());
         //Pega o nome da linha selecionada:
         String nome = model.getValueAt(rowIndex, 1).toString();
-        
+
         String cpf = model.getValueAt(rowIndex, 2).toString();
-        
+
         String dataNascimento = model.getValueAt(rowIndex, 3).toString();
-            
+
         AlunoStatico.setTipoDeAcao("alteracao");
         AlunoStatico.setCodigoAluno(id);
         AlunoStatico.setNome(nome);
         AlunoStatico.setCPF(cpf);
         AlunoStatico.setDataDeNascimento(dataNascimento);
-        
+
         if (evt.getClickCount() > 1) {
-            new Cad_Aluno(null, true,"editar").setVisible(true);
+            new Cad_Aluno(null, true, "editar").setVisible(true);
         }
 
     }//GEN-LAST:event_jTableAlunoMouseClicked
@@ -268,9 +282,48 @@ public class Cons_Aluno extends javax.swing.JDialog {
         }
 
     }
+
+    void filtrarDados() {
+
+        String[] columnNames = {"ID", "NOME", "CPF", "DATA DE NASCIMENTO"};
+
+        try {
+            String filtro = jtCursoNome.getText();
+            String filtroTipo = jComboBoxFiltro.getSelectedItem().toString();
+            System.out.println(filtro);
+            System.out.println(filtroTipo);
+            Aluno alunos[] = AlunoController.filtrarDadosAluno(filtro, filtroTipo);
+
+            Object[][] data = new Object[alunos.length][4]; //O 2, aqui, é a quantidade de colunas
+
+            int index = 0;
+
+            for (Aluno s : alunos) {
+                data[index][0] = s.getCodigoAluno(); //
+                data[index][1] = s.getNome(); //
+                data[index][2] = s.getCPF(); //
+                data[index][3] = s.getDataDeNascimento(); //
+                index++;
+            }
+
+            TableModel model = new DefaultTableModel(data, columnNames) {
+                private static final long serialVersionUID = 1L;
+
+                public boolean isCellEditable(int row, int column) {
+                    return column < -1;
+                }
+            };
+
+            jTableAluno.setModel(model);
+
+        } catch (Exception ex) {
+            Logger.getLogger(Cons_Cursos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new Cad_Aluno(null, rootPaneCheckingEnabled,"incluir").setVisible(true);
+        new Cad_Aluno(null, rootPaneCheckingEnabled, "incluir").setVisible(true);
 //        String nomeDoAluno = jtCursoNome.getText().trim();
 //        if (nomeDoAluno.length() > 0) {
 //           /*if (AlunoController.incluir(nomeDoAluno) > 0) {
@@ -287,13 +340,14 @@ public class Cons_Aluno extends javax.swing.JDialog {
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
         // TODO add your handling code here:
-        
+
         preencherDadosNaTabela();
     }//GEN-LAST:event_formWindowGainedFocus
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonPesquisarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarAlunoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        filtrarDados();
+    }//GEN-LAST:event_jButtonPesquisarAlunoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -346,9 +400,11 @@ public class Cons_Aluno extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonPesquisarAluno;
+    private javax.swing.JComboBox<String> jComboBoxFiltro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

@@ -47,10 +47,11 @@ public class AlunoController extends Funcoes {
         }
         return 0;
     }
+
     /**
-     * 
+     *
      * @param alunoId
-     * @return 
+     * @return
      */
     public static int excluir(int alunoId) {
         String sql = "DELETE FROM aluno WHERE codaluno = ?;";
@@ -135,12 +136,52 @@ public class AlunoController extends Funcoes {
         return null;
     }
 
-    /**
-     *
-     * @param alunoId
-     * @return
-     * @throws Exception
-     */
+    public static Aluno[] filtrarDadosAluno(String filtro, String filtroTipo) throws Exception {
+
+        PreparedStatement preparedStatement;
+
+        try {
+            String sql = "";
+
+            if (filtroTipo.toLowerCase().equals("nome".toLowerCase())) {
+                sql = "SELECT * FROM aluno WHERE nomealuno LIKE ?;";
+            }
+            else if(filtroTipo.toLowerCase().equals("cpf".toLowerCase())){
+                sql = "SELECT * FROM aluno WHERE cpf = ?;";
+            }
+            System.out.println(sql);
+            preparedStatement = Conexao.conectar().prepareStatement(sql);
+            preparedStatement.setString(1, "%" + filtro + "%");
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (!rs.next()) {
+                System.out.println("Nenhum registro encontrado para alunos.");
+            } else {
+
+                Aluno[] alunos = new Aluno[getTotalDeRegistros(rs)];
+
+                int i = 0;
+
+                while (rs.next()) {
+                    //String nomeALuno, int codigoAluno, String , String , String , String 
+                    alunos[i] = new Aluno(rs.getString("nomealuno"),
+                            rs.getInt("codaluno"),
+                            rs.getString("data_nascimento"),
+                            rs.getString("cpf"),
+                            rs.getString("email"),
+                            rs.getString("telefone")
+                    );
+                    ++i;
+                }
+                return alunos;
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return null;
+    }
+
     public static Aluno[] getDadosPorAlunoId(int alunoId) throws Exception {
 
         PreparedStatement preparedStatement;
