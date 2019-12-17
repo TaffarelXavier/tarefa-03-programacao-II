@@ -111,6 +111,12 @@ public class Cons_Aluno extends javax.swing.JDialog {
             }
         });
 
+        jtCursoNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtCursoNomeKeyPressed(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Pesquisar aluno(s):");
 
@@ -289,7 +295,7 @@ public class Cons_Aluno extends javax.swing.JDialog {
 
         try {
             String filtro = jtCursoNome.getText();
-            
+
             String filtroTipo = jComboBoxFiltro.getSelectedItem().toString().toLowerCase();
 
             Aluno alunos[] = AlunoController.filtrarDadosAluno(filtro, filtroTipo);
@@ -348,6 +354,13 @@ public class Cons_Aluno extends javax.swing.JDialog {
         // TODO add your handling code here:
         filtrarDados();
     }//GEN-LAST:event_jButtonPesquisarAlunoActionPerformed
+
+    private void jtCursoNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtCursoNomeKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 10) {
+            jButtonPesquisarAluno.doClick();
+        }
+    }//GEN-LAST:event_jtCursoNomeKeyPressed
 
     /**
      * @param args the command line arguments

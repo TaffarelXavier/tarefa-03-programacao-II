@@ -94,11 +94,11 @@ public class Cad_Cursos extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(80, Short.MAX_VALUE)
-                .addComponent(jButtonExcluirCurso)
+                .addContainerGap()
+                .addComponent(jButtonExcluirCurso, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(10, 10, 10))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,6 +191,7 @@ public class Cad_Cursos extends javax.swing.JDialog {
 
                 if (CursoController.incluir(cursoNome) > 0) {
                     JOptionPane.showMessageDialog(null, "Curso inserido com sucesso!.");
+                    this.setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Não foi possível alterar os dados deste curso.\nTente novamente mais tarde.");
                 }
@@ -223,6 +224,7 @@ public class Cad_Cursos extends javax.swing.JDialog {
             if (cursoCodigo > 0) {
                 if (CursoController.excluirCurso(cursoCodigo) > 0) {
                     JOptionPane.showMessageDialog(null, "Curso excluído com sucesso!.");
+                    this.setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Não foi possível excluir este curso. Tente novamente.");
                 }

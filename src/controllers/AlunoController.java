@@ -33,15 +33,33 @@ public class AlunoController extends Funcoes {
         try {
             String sql = "INSERT INTO aluno (nomealuno, data_nascimento,"
                     + " cpf, telefone, email) VALUES (?,?,?,?,?);";
-            PreparedStatement preparedStatement = Conexao.conectar().prepareStatement(sql,
-                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
+            PreparedStatement preparedStatement = Conexao.conectar().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, nome.trim());
             preparedStatement.setString(2, dataNascimento.trim());
             preparedStatement.setString(3, cpf.trim());
             preparedStatement.setString(4, telefone.trim());
             preparedStatement.setString(5, email.trim());
-            return preparedStatement.executeUpdate();
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            if (affectedRows == 0) {
+                JOptionPane.showMessageDialog(null, "A criação do usuário falhou!", "Atenção", 1);
+                return -1;
+            }
+
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+
+            int generatedKey = 0;
+
+            if (rs.next()) {
+                generatedKey = rs.getInt(1); //Retorna o ID da inserção.
+            } else {
+                JOptionPane.showMessageDialog(null, "A criação do usuário falhou!", "Atenção", 1);
+                return -1;
+            }
+
+            return generatedKey;
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Atenção: erro!", 1);
         }
@@ -142,9 +160,9 @@ public class AlunoController extends Funcoes {
 
         try {
             String sql;
-            
+
             ResultSet rs = null;
-            
+
             if (filtroTipo.toLowerCase().equals("nome".toLowerCase())) {
                 sql = "SELECT * FROM aluno WHERE nomealuno LIKE ?;";
                 preparedStatement = Conexao.conectar().prepareStatement(sql);
@@ -156,7 +174,7 @@ public class AlunoController extends Funcoes {
 
             }
             rs = preparedStatement.executeQuery();
-            
+
             if (!rs.next()) {
                 System.out.println("Nenhum registro encontrado para alunos.");
             } else {

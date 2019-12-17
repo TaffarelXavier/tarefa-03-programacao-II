@@ -44,6 +44,31 @@ public class Cad_Aluno extends javax.swing.JDialog {
     private String acao;
     private boolean isMatricular = false;
 
+    void mostrarDadosAlunosEdicao(int alu_id) {
+
+        try {
+            Aluno aluno[] = AlunoController.getDadosPorAlunoId(alu_id);
+
+            jTextFieldNome.setText(aluno[0].getNome());
+
+            jTextFieldCPF.setText(aluno[0].getCPF());
+
+            jTextFieldTelefone.setText(aluno[0].getTelefone());
+
+            jTextFieldDataNascimento.setText(aluno[0].getDataDeNascimento());
+
+            jTextFieldEmail.setText(aluno[0].getEmail());
+
+            jButtonExcluirAluno.setEnabled(true);
+
+            jButtonMatricular.setEnabled(true);
+
+            jButtonSalvarAlteracoes.setEnabled(true);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Atenção", 1);
+        }
+    }
+
     /**
      *
      * @param parent
@@ -64,25 +89,7 @@ public class Cad_Aluno extends javax.swing.JDialog {
 
         try {
             if (acao.equals("editar")) { //Editar Aluno
-
-                Aluno aluno[] = AlunoController.getDadosPorAlunoId(alunoID);
-
-                jTextFieldNome.setText(aluno[0].getNome());
-
-                jTextFieldCPF.setText(aluno[0].getCPF());
-
-                jTextFieldTelefone.setText(aluno[0].getTelefone());
-
-                jTextFieldDataNascimento.setText(aluno[0].getDataDeNascimento());
-
-                jTextFieldEmail.setText(aluno[0].getEmail());
-
-                jButtonExcluirAluno.setEnabled(true);
-
-                jButtonMatricular.setEnabled(true);
-
-                jButtonSalvarAlteracoes.setEnabled(true);
-
+                mostrarDadosAlunosEdicao(alunoID);
             } else {
                 jTextFieldNome.setText("");
 
@@ -381,15 +388,13 @@ public class Cad_Aluno extends javax.swing.JDialog {
                                         .addComponent(jComboBoxTurma, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                 .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelMatriculaLayout.createSequentialGroup()
-                                        .addComponent(jLabel13)
-                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addComponent(jTextFieldPeriodo)
                                     .addGroup(jPanelMatriculaLayout.createSequentialGroup()
                                         .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel13)
                                             .addComponent(jTextFieldMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel14))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
                         .addGroup(jPanelMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanelMatriculaLayout.createSequentialGroup()
                                 .addGap(60, 60, 60)
@@ -444,11 +449,10 @@ public class Cad_Aluno extends javax.swing.JDialog {
                     .addGroup(jPanelMatriculaLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 11, Short.MAX_VALUE)
+                        .addGap(0, 10, Short.MAX_VALUE)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(11, 11, 11)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -583,20 +587,20 @@ public class Cad_Aluno extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonExcluirAluno)
+                .addComponent(jButtonExcluirAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonMatricular, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonMatricular, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonSalvarAlteracoes, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonSalvarAlteracoes, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonSalvarAlteracoes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonMatricular, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonExcluirAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonSalvarAlteracoes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonMatricular, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonExcluirAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -688,15 +692,21 @@ public class Cad_Aluno extends javax.swing.JDialog {
 
         } else {
             //Inclusão
+            int autoIncrementAlunoFK = AlunoController.incluir(nome, dataNascimento, cpf, telefone, email);
 
-            if (AlunoController.incluir(nome, dataNascimento, cpf, telefone, email) > 0) {
+            if (autoIncrementAlunoFK > 0) {
                 int dialogResult = JOptionPane.showConfirmDialog(null,
                         "Aluno Cadastro com Sucesso!\n\nDeseja matricular este aluno agora?", "Atenção",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (dialogResult == JOptionPane.YES_OPTION) {
+                    this.alunoID = autoIncrementAlunoFK;
                     permitirEdicao(true);
+                    mostrarDadosAlunosEdicao(this.alunoID);
+                    mostrarDadosParaMatricula();
+                    acao = "editar";
+                } else {
+                    this.setVisible(false);
                 }
-
             } else {
 
             }
@@ -705,7 +715,7 @@ public class Cad_Aluno extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButtonSalvarAlteracoesActionPerformed
 
-    private void jButtonMatricularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMatricularActionPerformed
+    void mostrarDadosParaMatricula() {
         try {
             //Dá focus 
             jTextFieldDataMatricula.requestFocus();
@@ -754,8 +764,12 @@ public class Cad_Aluno extends javax.swing.JDialog {
             DefaultTableModel modelDisc = (DefaultTableModel) jTableDisciplinas.getModel();
             modelDisc.setRowCount(0);
         } catch (Exception ex) {
-            Logger.getLogger(Cad_Aluno.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Atenção", 1);
         }
+    }
+
+    private void jButtonMatricularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMatricularActionPerformed
+        mostrarDadosParaMatricula();
     }//GEN-LAST:event_jButtonMatricularActionPerformed
 
     private void jComboBoxDisciplinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDisciplinasActionPerformed

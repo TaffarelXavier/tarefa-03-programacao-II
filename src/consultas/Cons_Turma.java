@@ -86,7 +86,7 @@ public class Cons_Turma extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jtCursoNome = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jButtonPesquisar = new javax.swing.JButton();
         jComboBoxFiltroTurma = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -151,11 +151,17 @@ public class Cons_Turma extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton2.setText("PESQUISAR");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jtCursoNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtCursoNomeKeyPressed(evt);
+            }
+        });
+
+        jButtonPesquisar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButtonPesquisar.setText("PESQUISAR");
+        jButtonPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonPesquisarActionPerformed(evt);
             }
         });
 
@@ -187,7 +193,7 @@ public class Cons_Turma extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jComboBoxFiltroTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(jButtonPesquisar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)))
                 .addContainerGap())
@@ -210,7 +216,7 @@ public class Cons_Turma extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButtonPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
         );
 
@@ -296,7 +302,7 @@ public class Cons_Turma extends javax.swing.JDialog {
         preencherDadosNaTabela();
     }//GEN-LAST:event_formWindowGainedFocus
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         // TODO add your handling code here:
         String[] columnNames = {"ID", "SALA", "CAPACIDADE", "TURNO", "BLOCO", "PERÍODO LETIVO", "ANO LETIVO"};
 
@@ -339,7 +345,14 @@ public class Cons_Turma extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(Cons_Cursos.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonPesquisarActionPerformed
+
+    private void jtCursoNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtCursoNomeKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == 10){
+            jButtonPesquisar.doClick();
+        }
+    }//GEN-LAST:event_jtCursoNomeKeyPressed
 
     /**
      * @param args the command line arguments
@@ -384,7 +397,7 @@ public class Cons_Turma extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonPesquisar;
     private javax.swing.JComboBox<String> jComboBoxFiltroTurma;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

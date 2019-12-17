@@ -5,7 +5,7 @@
  */
 package outras;
 
-import outras.TelaPrincipal;
+import outras.Login;
 
 /**
  *
@@ -13,7 +13,7 @@ import outras.TelaPrincipal;
  */
 public class IniciarPrograma {
     public static void main(String[] args) {
-        TelaPrincipal tela = new TelaPrincipal();
+        Login tela = new Login();
         tela.setVisible(true);
     }
 }

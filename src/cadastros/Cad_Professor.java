@@ -5,8 +5,6 @@ package cadastros;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import classesestaticas.ProfessorStatic;
 import controllers.DisciplinaController;
 import controllers.DisciplinaProfessorController;
@@ -55,7 +53,12 @@ public class Cad_Professor extends javax.swing.JDialog {
 
             jTextField_CPF.setText(ProfessorStatic.getCPF());
 
-            System.out.println(ProfessorStatic.getStatus());
+            /*ProfessorStatic.setId(id);
+            ProfessorStatic.setCPF(CPF);
+            ProfessorStatic.setNome(nome);
+            //ProfessorStatic.setStatus(status);*/
+            ProfessorStatic.setTipo("alterar");
+            jComboBoxStatus.setSelectedItem(ProfessorStatic.getStatus());
 
             preecherTabelaDisciplina();
         }
@@ -93,7 +96,6 @@ public class Cad_Professor extends javax.swing.JDialog {
 //            this.label = label;
 //        }
 //    }
-
     final void prencheDisciplinasPorProfessor() {
 
         try {
@@ -123,7 +125,7 @@ public class Cad_Professor extends javax.swing.JDialog {
                 professorDisciplina = DisciplinaProfessorController.listarDisciplinasPorProfessor(ProfessorStatic.getId());
 
                 if (professorDisciplina != null) {
-                    
+
                     Object[][] data = new Object[professorDisciplina.length][2]; //O 2, aqui, é a quantidade de colunas
 
                     int index = 0;
@@ -316,7 +318,6 @@ public class Cad_Professor extends javax.swing.JDialog {
 
         jButtonSalvarAlteracao.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButtonSalvarAlteracao.setText("Salvar Alterações");
-        jButtonSalvarAlteracao.setEnabled(false);
         jButtonSalvarAlteracao.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jButtonSalvarAlteracao.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonSalvarAlteracao.addActionListener(new java.awt.event.ActionListener() {

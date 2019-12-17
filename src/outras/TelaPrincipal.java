@@ -208,6 +208,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel2.setText("SME - SISTEMA MODULAR ESCOLAR");
 
         jMenu1.setText("Sistema");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
 
         jMenuProfessor.setText("Transações");
         jMenuProfessor.addActionListener(new java.awt.event.ActionListener() {
@@ -459,10 +464,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
-        int dialogResult = JOptionPane.showConfirmDialog(null, "Deseja realmente sair?", "Anteção!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (dialogResult == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
+//        int dialogResult = JOptionPane.showConfirmDialog(null, "Deseja realmente sair?", "Anteção!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+//        if (dialogResult == JOptionPane.YES_OPTION) {
+//            System.exit(0);
+//        }
+        this.setVisible(false);
+        new Login().setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -473,6 +480,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         jMenuItem7.doClick();
     }//GEN-LAST:event_formWindowClosing
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jMenu1ActionPerformed
 
     /**
      * @param args the command line arguments
