@@ -42,9 +42,4 @@ contendo os cursos, clique sobre alguma linha para poder
 habilitar as opções de cursos.
 
 ----
-Por enquanto, para a tabela `curso` há as opções de:
-
-- Incluir
-- Editar
-- Selecionar Todos Registros
-- Excluir um registro
+Todas as tabelas tem as funções de __CRUD__.
